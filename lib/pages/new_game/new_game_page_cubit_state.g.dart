@@ -8,15 +8,18 @@ part of 'new_game_page_cubit_state.dart';
 
 class _$NewGamePageCubitState extends NewGamePageCubitState {
   @override
-  final BuiltList<Player> players;
+  final Game game;
+  @override
+  final Player? currentPlayer;
 
   factory _$NewGamePageCubitState(
           [void Function(NewGamePageCubitStateBuilder)? updates]) =>
       (new NewGamePageCubitStateBuilder()..update(updates))._build();
 
-  _$NewGamePageCubitState._({required this.players}) : super._() {
+  _$NewGamePageCubitState._({required this.game, this.currentPlayer})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        players, r'NewGamePageCubitState', 'players');
+        game, r'NewGamePageCubitState', 'game');
   }
 
   @override
@@ -31,13 +34,16 @@ class _$NewGamePageCubitState extends NewGamePageCubitState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is NewGamePageCubitState && players == other.players;
+    return other is NewGamePageCubitState &&
+        game == other.game &&
+        currentPlayer == other.currentPlayer;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
-    _$hash = $jc(_$hash, players.hashCode);
+    _$hash = $jc(_$hash, game.hashCode);
+    _$hash = $jc(_$hash, currentPlayer.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -45,7 +51,8 @@ class _$NewGamePageCubitState extends NewGamePageCubitState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'NewGamePageCubitState')
-          ..add('players', players))
+          ..add('game', game)
+          ..add('currentPlayer', currentPlayer))
         .toString();
   }
 }
@@ -54,17 +61,23 @@ class NewGamePageCubitStateBuilder
     implements Builder<NewGamePageCubitState, NewGamePageCubitStateBuilder> {
   _$NewGamePageCubitState? _$v;
 
-  ListBuilder<Player>? _players;
-  ListBuilder<Player> get players =>
-      _$this._players ??= new ListBuilder<Player>();
-  set players(ListBuilder<Player>? players) => _$this._players = players;
+  GameBuilder? _game;
+  GameBuilder get game => _$this._game ??= new GameBuilder();
+  set game(GameBuilder? game) => _$this._game = game;
+
+  PlayerBuilder? _currentPlayer;
+  PlayerBuilder get currentPlayer =>
+      _$this._currentPlayer ??= new PlayerBuilder();
+  set currentPlayer(PlayerBuilder? currentPlayer) =>
+      _$this._currentPlayer = currentPlayer;
 
   NewGamePageCubitStateBuilder();
 
   NewGamePageCubitStateBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _players = $v.players.toBuilder();
+      _game = $v.game.toBuilder();
+      _currentPlayer = $v.currentPlayer?.toBuilder();
       _$v = null;
     }
     return this;
@@ -87,12 +100,16 @@ class NewGamePageCubitStateBuilder
   _$NewGamePageCubitState _build() {
     _$NewGamePageCubitState _$result;
     try {
-      _$result = _$v ?? new _$NewGamePageCubitState._(players: players.build());
+      _$result = _$v ??
+          new _$NewGamePageCubitState._(
+              game: game.build(), currentPlayer: _currentPlayer?.build());
     } catch (_) {
       late String _$failedField;
       try {
-        _$failedField = 'players';
-        players.build();
+        _$failedField = 'game';
+        game.build();
+        _$failedField = 'currentPlayer';
+        _currentPlayer?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'NewGamePageCubitState', _$failedField, e.toString());

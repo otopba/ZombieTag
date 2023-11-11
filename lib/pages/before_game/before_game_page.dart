@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:taggame/gen/assets.gen.dart';
 import 'package:taggame/kit/text/wd_text_style.dart';
 import 'package:taggame/log.dart';
-import 'package:taggame/pages/home/home_page_cubit.dart';
-import 'package:taggame/pages/home/home_page_cubit_state.dart';
+import 'package:taggame/pages/before_game/before_game_page_cubit.dart';
+import 'package:taggame/pages/before_game/before_game_page_cubit_state.dart';
 import 'package:taggame/services/navigator/router_service.dart';
 import 'package:taggame/tg_page_mixin.dart';
 import 'package:taggame/widgets/bottom_wide_button.dart';
 
-const _tag = 'home_page';
+const _tag = 'before_game_page';
 
-class HomePage extends StatefulWidget {
-  const HomePage({
+class BeforeGamePage extends StatefulWidget {
+  const BeforeGamePage({
     super.key,
   });
 
   @override
-  State<HomePage> createState() => _MyHomePageState();
+  State<BeforeGamePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<HomePage> with TGPageStateMixin {
-  final _cubit = HomePageCubit();
-  late HomePageCubitState _state;
+class _MyHomePageState extends State<BeforeGamePage> with TGPageStateMixin {
+  final _cubit = BeforeGamePageCubit();
+  late BeforeGamePageCubitState _state;
 
   @override
   void dispose() {
@@ -33,7 +32,7 @@ class _MyHomePageState extends State<HomePage> with TGPageStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomePageCubit, HomePageCubitState>(
+    return BlocBuilder<BeforeGamePageCubit, BeforeGamePageCubitState>(
       bloc: _cubit,
       builder: _builder,
     );
@@ -41,7 +40,7 @@ class _MyHomePageState extends State<HomePage> with TGPageStateMixin {
 
   Widget _builder(
     BuildContext context,
-    HomePageCubitState state,
+    BeforeGamePageCubitState state,
   ) {
     _state = state;
 
@@ -69,14 +68,17 @@ class _MyHomePageState extends State<HomePage> with TGPageStateMixin {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const Spacer(),
-                Assets.zombie.lottie(),
-                const Spacer(),
+                SizedBox(height: 100.h),
                 BottomWideButton(
-                  centralText: localizations.play.toUpperCase(),
+                  centralText: localizations.newGame.toUpperCase(),
                   centralTextColor: colors.backgroundColor,
-                  shimmer: true,
                   onPressed: _onNewGamePressed,
+                ),
+                SizedBox(height: 50.h),
+                BottomWideButton(
+                  centralText: localizations.joinGame.toUpperCase(),
+                  centralTextColor: colors.backgroundColor,
+                  onPressed: _onJoinGamePressed,
                 ),
                 SizedBox(height: 20.h),
               ],
@@ -90,6 +92,12 @@ class _MyHomePageState extends State<HomePage> with TGPageStateMixin {
   void _onNewGamePressed() {
     Log.d(_tag, '_onNewGamePressed');
 
-    const BeforeGameRoute().push(context);
+    const NewGameRoute().push(context);
+  }
+
+  void _onJoinGamePressed() {
+    Log.d(_tag, '_onJoinGamePressed');
+
+    const NewGameRoute().push(context);
   }
 }

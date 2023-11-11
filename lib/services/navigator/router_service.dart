@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:taggame/pages/before_game/before_game_page.dart';
 import 'package:taggame/pages/home/home_page.dart';
+import 'package:taggame/pages/join_game/join_game_page.dart';
 import 'package:taggame/pages/new_game/new_game_page.dart';
 import 'package:taggame/pages/roster/roster_page.dart';
 import 'package:taggame/pages/run/run_page.dart';
@@ -47,6 +49,15 @@ class HomeRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) => const HomePage();
 }
 
+@TypedGoRoute<BeforeGameRoute>(path: '/beforeGame')
+class BeforeGameRoute extends GoRouteData {
+  const BeforeGameRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const BeforeGamePage();
+}
+
 @TypedGoRoute<NewGameRoute>(path: '/newGame')
 class NewGameRoute extends GoRouteData {
   const NewGameRoute();
@@ -54,6 +65,15 @@ class NewGameRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const NewGamePage();
+}
+
+@TypedGoRoute<JoinGameRoute>(path: '/joinGame')
+class JoinGameRoute extends GoRouteData {
+  const JoinGameRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const JoinGamePage();
 }
 
 @TypedGoRoute<RosterRoute>(path: '/roster')

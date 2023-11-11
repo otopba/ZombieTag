@@ -8,7 +8,9 @@ part of 'router_service.dart';
 
 List<RouteBase> get $appRoutes => [
       $homeRoute,
+      $beforeGameRoute,
       $newGameRoute,
+      $joinGameRoute,
       $rosterRoute,
       $zombieSelectedRoute,
       $runRoute,
@@ -36,6 +38,29 @@ extension $HomeRouteExtension on HomeRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
+RouteBase get $beforeGameRoute => GoRouteData.$route(
+      path: '/beforeGame',
+      factory: $BeforeGameRouteExtension._fromState,
+    );
+
+extension $BeforeGameRouteExtension on BeforeGameRoute {
+  static BeforeGameRoute _fromState(GoRouterState state) =>
+      const BeforeGameRoute();
+
+  String get location => GoRouteData.$location(
+        '/beforeGame',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
 RouteBase get $newGameRoute => GoRouteData.$route(
       path: '/newGame',
       factory: $NewGameRouteExtension._fromState,
@@ -46,6 +71,28 @@ extension $NewGameRouteExtension on NewGameRoute {
 
   String get location => GoRouteData.$location(
         '/newGame',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $joinGameRoute => GoRouteData.$route(
+      path: '/joinGame',
+      factory: $JoinGameRouteExtension._fromState,
+    );
+
+extension $JoinGameRouteExtension on JoinGameRoute {
+  static JoinGameRoute _fromState(GoRouterState state) => const JoinGameRoute();
+
+  String get location => GoRouteData.$location(
+        '/joinGame',
       );
 
   void go(BuildContext context) => context.go(location);

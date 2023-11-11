@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "647274963950",
+    "project_id": "zombietag-a2c49",
+    "storage_bucket": "zombietag-a2c49.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647274963950:android:fcdf83b62e16c9802764ff",
+        "android_client_info": {
+          "package_name": "com.example.taggame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNzKSrYR72bF-IxxDgFwgqXtoTvuf9Nh4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,10 +4,12 @@
   "english": "English",
   "unknown": "Unknown",
   "newGame": "New game",
+  "joinGame": "Join game",
   "players": "Players",
   "start": "Start",
   "waitingForOtherPlayers": "Waiting for other players...",
   "choosingZombie": "Who will be the Zombie?",
   "zombieIs": "The zombie is",
-  "run": "Run"
+  "run": "Run",
+  "play": "Play"
 }

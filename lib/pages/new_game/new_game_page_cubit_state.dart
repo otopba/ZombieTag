@@ -1,4 +1,5 @@
 import 'package:built_value/built_value.dart';
+import 'package:taggame/models/game.dart';
 import 'package:taggame/models/player.dart';
 import 'package:built_collection/built_collection.dart';
 
@@ -12,5 +13,7 @@ abstract class NewGamePageCubitState
 
   NewGamePageCubitState._();
 
-  BuiltList<Player> get players;
+  Game get game;
+
+  Player? get currentPlayer;
 }

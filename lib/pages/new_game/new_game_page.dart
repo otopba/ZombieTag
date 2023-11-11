@@ -5,7 +5,6 @@ import 'package:taggame/kit/text/wd_text_style.dart';
 import 'package:taggame/log.dart';
 import 'package:taggame/pages/new_game/new_game_page_cubit.dart';
 import 'package:taggame/pages/new_game/new_game_page_cubit_state.dart';
-import 'package:taggame/pages/roster/roster_page.dart';
 import 'package:taggame/services/navigator/router_service.dart';
 import 'package:taggame/tg_page_mixin.dart';
 import 'package:taggame/widgets/bottom_wide_button.dart';
@@ -76,14 +75,20 @@ class _MyHomePageState extends State<NewGamePage> with TGPageStateMixin {
                   child: ListView.separated(
                     itemBuilder: _itemBuilder,
                     separatorBuilder: _separatorBuilder,
-                    itemCount: _state.players.length,
+                    itemCount: _state.game.players.length,
                   ),
                 ),
                 BottomWideButton(
                   centralText: localizations.start.toUpperCase(),
                   centralTextColor: colors.backgroundColor,
-                  shimmer: true,
-                  onPressed: _onStartGamePressed,
+                  color: _state.game.players.length > 1
+                      ? colors.accentColor
+                      : colors.accentColor.withOpacity(0.2),
+                  shimmer: _state.game.players.length > 1,
+                  onPressed: _state.game.players.length > 1
+                      ? _onStartGamePressed
+                      : null,
+                  enabled: _state.game.players.length > 1,
                 ),
                 SizedBox(height: 20.h),
               ],
@@ -95,7 +100,7 @@ class _MyHomePageState extends State<NewGamePage> with TGPageStateMixin {
   }
 
   Widget _itemBuilder(BuildContext context, int index) {
-    return PlayerCard(player: _state.players[index]);
+    return PlayerCard(player: _state.game.players[index]);
   }
 
   Widget _separatorBuilder(BuildContext context, int index) {

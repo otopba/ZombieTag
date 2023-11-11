@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:taggame/gen/assets.gen.dart';
 import 'package:taggame/kit/text/wd_text_style.dart';
 import 'package:taggame/log.dart';
-import 'package:taggame/pages/home/home_page_cubit.dart';
-import 'package:taggame/pages/home/home_page_cubit_state.dart';
+import 'package:taggame/pages/join_game/join_game_page_cubit.dart';
+import 'package:taggame/pages/join_game/join_game_page_cubit_state.dart';
 import 'package:taggame/services/navigator/router_service.dart';
 import 'package:taggame/tg_page_mixin.dart';
 import 'package:taggame/widgets/bottom_wide_button.dart';
+import 'package:taggame/widgets/player_card.dart';
 
-const _tag = 'home_page';
+const _tag = 'join_game_page';
 
-class HomePage extends StatefulWidget {
-  const HomePage({
+class JoinGamePage extends StatefulWidget {
+  const JoinGamePage({
     super.key,
   });
 
   @override
-  State<HomePage> createState() => _MyHomePageState();
+  State<JoinGamePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<HomePage> with TGPageStateMixin {
-  final _cubit = HomePageCubit();
-  late HomePageCubitState _state;
+class _MyHomePageState extends State<JoinGamePage> with TGPageStateMixin {
+  final _cubit = JoinGamePageCubit();
+  late JoinGamePageCubitState _state;
 
   @override
   void dispose() {
@@ -33,7 +33,7 @@ class _MyHomePageState extends State<HomePage> with TGPageStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomePageCubit, HomePageCubitState>(
+    return BlocBuilder<JoinGamePageCubit, JoinGamePageCubitState>(
       bloc: _cubit,
       builder: _builder,
     );
@@ -41,7 +41,7 @@ class _MyHomePageState extends State<HomePage> with TGPageStateMixin {
 
   Widget _builder(
     BuildContext context,
-    HomePageCubitState state,
+    JoinGamePageCubitState state,
   ) {
     _state = state;
 
@@ -56,27 +56,33 @@ class _MyHomePageState extends State<HomePage> with TGPageStateMixin {
               children: <Widget>[
                 SizedBox(height: 100.h),
                 Text(
-                  localizations.appTitle,
+                  localizations.newGame,
                   style: TGTextStyle.instance.styleH1.copyWith(
                     color: colors.primaryTextColor,
                   ),
                   textAlign: TextAlign.center,
                 ),
+                SizedBox(height: 100.h),
                 Text(
-                  localizations.appSubTitle,
-                  style: TGTextStyle.instance.style24.copyWith(
+                  localizations.waitingForOtherPlayers,
+                  style: TGTextStyle.instance.style17.copyWith(
                     color: colors.secondaryTextColor,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const Spacer(),
-                Assets.zombie.lottie(),
-                const Spacer(),
+                SizedBox(height: 20.h),
+                Expanded(
+                  child: ListView.separated(
+                    itemBuilder: _itemBuilder,
+                    separatorBuilder: _separatorBuilder,
+                    itemCount: _state.players.length,
+                  ),
+                ),
                 BottomWideButton(
-                  centralText: localizations.play.toUpperCase(),
+                  centralText: localizations.start.toUpperCase(),
                   centralTextColor: colors.backgroundColor,
                   shimmer: true,
-                  onPressed: _onNewGamePressed,
+                  onPressed: _onStartGamePressed,
                 ),
                 SizedBox(height: 20.h),
               ],
@@ -87,9 +93,17 @@ class _MyHomePageState extends State<HomePage> with TGPageStateMixin {
     );
   }
 
-  void _onNewGamePressed() {
-    Log.d(_tag, '_onNewGamePressed');
+  Widget _itemBuilder(BuildContext context, int index) {
+    return PlayerCard(player: _state.players[index]);
+  }
 
-    const BeforeGameRoute().push(context);
+  Widget _separatorBuilder(BuildContext context, int index) {
+    return SizedBox(height: 8.h);
+  }
+
+  void _onStartGamePressed() {
+    Log.d(_tag, '_onStartGamePressed');
+
+    const RosterRoute().push(context);
   }
 }
