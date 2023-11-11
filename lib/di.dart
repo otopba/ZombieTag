@@ -7,8 +7,8 @@ import 'package:taggame/services/analytics/analytics_service.dart';
 import 'package:taggame/services/analytics/composite_analytics_service.dart';
 import 'package:taggame/services/current_player_service.dart';
 import 'package:taggame/services/localization_service.dart';
-import 'package:taggame/services/location_service.dart';
 import 'package:taggame/services/navigator/router_service.dart';
+import 'package:taggame/services/nearby_players_service.dart';
 import 'package:taggame/services/permissions_service.dart';
 import 'package:taggame/services/route_observer_service.dart';
 
@@ -53,7 +53,13 @@ Future<void> setupDi() async {
 
   di.registerSingleton<PermissionsService>(PermissionsService());
 
-  di.registerSingleton<LocationService>(LocationService());
+  di.registerSingleton<NearbyPlayersService>(
+    NearbyPlayersService(
+      gameRepository: di.get(),
+      currentPlayerService: di.get(),
+    ),
+    dispose: (it) => it.dispose(),
+  );
 
   return di.allReady();
 }

@@ -12,6 +12,8 @@ abstract class Player implements Built<Player, PlayerBuilder> {
 
   String get id;
 
+  String get uuid;
+
   String get name;
 
   String get rank;

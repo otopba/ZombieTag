@@ -20,6 +20,8 @@ class _$PlayerSerializer implements StructuredSerializer<Player> {
     final result = <Object?>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
+      'uuid',
+      serializers.serialize(object.uuid, specifiedType: const FullType(String)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'rank',
@@ -51,6 +53,10 @@ class _$PlayerSerializer implements StructuredSerializer<Player> {
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
+        case 'uuid':
+          result.uuid = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
@@ -74,6 +80,8 @@ class _$Player extends Player {
   @override
   final String id;
   @override
+  final String uuid;
+  @override
   final String name;
   @override
   final String rank;
@@ -85,11 +93,13 @@ class _$Player extends Player {
 
   _$Player._(
       {required this.id,
+      required this.uuid,
       required this.name,
       required this.rank,
       this.createdAt})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'Player', 'id');
+    BuiltValueNullFieldError.checkNotNull(uuid, r'Player', 'uuid');
     BuiltValueNullFieldError.checkNotNull(name, r'Player', 'name');
     BuiltValueNullFieldError.checkNotNull(rank, r'Player', 'rank');
   }
@@ -106,6 +116,7 @@ class _$Player extends Player {
     if (identical(other, this)) return true;
     return other is Player &&
         id == other.id &&
+        uuid == other.uuid &&
         name == other.name &&
         rank == other.rank &&
         createdAt == other.createdAt;
@@ -115,6 +126,7 @@ class _$Player extends Player {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, uuid.hashCode);
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, rank.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
@@ -126,6 +138,7 @@ class _$Player extends Player {
   String toString() {
     return (newBuiltValueToStringHelper(r'Player')
           ..add('id', id)
+          ..add('uuid', uuid)
           ..add('name', name)
           ..add('rank', rank)
           ..add('createdAt', createdAt))
@@ -139,6 +152,10 @@ class PlayerBuilder implements Builder<Player, PlayerBuilder> {
   String? _id;
   String? get id => _$this._id;
   set id(String? id) => _$this._id = id;
+
+  String? _uuid;
+  String? get uuid => _$this._uuid;
+  set uuid(String? uuid) => _$this._uuid = uuid;
 
   String? _name;
   String? get name => _$this._name;
@@ -158,6 +175,7 @@ class PlayerBuilder implements Builder<Player, PlayerBuilder> {
     final $v = _$v;
     if ($v != null) {
       _id = $v.id;
+      _uuid = $v.uuid;
       _name = $v.name;
       _rank = $v.rank;
       _createdAt = $v.createdAt;
@@ -184,6 +202,8 @@ class PlayerBuilder implements Builder<Player, PlayerBuilder> {
     final _$result = _$v ??
         new _$Player._(
             id: BuiltValueNullFieldError.checkNotNull(id, r'Player', 'id'),
+            uuid:
+                BuiltValueNullFieldError.checkNotNull(uuid, r'Player', 'uuid'),
             name:
                 BuiltValueNullFieldError.checkNotNull(name, r'Player', 'name'),
             rank:

@@ -95,4 +95,15 @@ class GameRepository {
       'status': 'finished',
     });
   }
+
+  Future<void> addZombie({
+    required String gameId,
+    required String playerId,
+  }) {
+    Log.d(_tag, 'addZombie: gameId = $gameId, player = $playerId');
+
+    return FirebaseFirestore.instance.doc('games/$gameId').update({
+      'zombies': FieldValue.arrayUnion([playerId])
+    });
+  }
 }

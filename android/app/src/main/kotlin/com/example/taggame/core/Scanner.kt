@@ -1,4 +1,4 @@
-package com.example.bledetector.core
+package com.example.taggame.core
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothManager
@@ -27,9 +27,12 @@ class Scanner(
     private lateinit var scanCallback: ScanCallback
 
     fun startService(context: Context) {
+        Log.d(TAG, "startService")
         if (!scanStarted.compareAndSet(false, true)) {
             return
         }
+
+        Log.d(TAG, "startService: started")
 
         val manager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         bluetoothLeScanner = manager.adapter.bluetoothLeScanner
@@ -64,18 +67,19 @@ class Scanner(
                 result ?: return
                 val detectedItem = itemFromScanResult(result) ?: return
                 val items = listOf(detectedItem)
-                updatesCallback.onPlayersDetected(items)
                 Log.d(TAG, "found items: $items")
+                updatesCallback.onPlayersDetected(items)
             }
 
             override fun onBatchScanResults(results: MutableList<ScanResult>?) {
                 results ?: return
                 val items = results.mapNotNull { itemFromScanResult(it) }
+                Log.d(TAG, "found items: $items")
                 updatesCallback.onPlayersDetected(items)
             }
 
             override fun onScanFailed(errorCode: Int) {
-                //Toast.makeText(context, "Scan failed. ErrorCode=$errorCode", Toast.LENGTH_LONG).show()
+                Log.e(TAG, "Scan failed. ErrorCode=$errorCode")
                 scanStarted.set(false)
             }
         }
@@ -84,10 +88,12 @@ class Scanner(
     }
 
     fun stopService() {
+        Log.d(TAG, "stopService")
         if (!scanStarted.compareAndSet(true, false)) {
             return
         }
 
+        Log.d(TAG, "stopService: stop")
         bluetoothLeScanner.stopScan(scanCallback)
     }
 

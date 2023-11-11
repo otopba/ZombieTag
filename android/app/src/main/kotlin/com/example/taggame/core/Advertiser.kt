@@ -1,4 +1,4 @@
-package com.example.bledetector.core
+package com.example.taggame.core
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothManager
@@ -8,6 +8,7 @@ import android.bluetooth.le.AdvertiseSettings
 import android.bluetooth.le.BluetoothLeAdvertiser
 import android.content.Context
 import android.os.ParcelUuid
+import android.util.Log
 import android.widget.Toast
 import java.util.UUID
 import java.util.concurrent.atomic.AtomicBoolean
@@ -23,18 +24,23 @@ class Advertiser(
     private lateinit var advertiseCallback: AdvertiseCallback
 
     fun startService(context: Context, zombie: Boolean) {
+        Log.d(TAG, "startService")
         restart(context, zombie)
     }
 
     private fun restart(context: Context, zombie: Boolean) {
+        Log.d(TAG, "restart")
         stopAdvertise()
         startAdvertise(context, zombie)
     }
 
     private fun startAdvertise(context: Context, zombie: Boolean) {
+        Log.d(TAG, "startAdvertise: zombie=$zombie")
         if (!advertiseStarted.compareAndSet(false, true)) {
             return
         }
+
+        Log.d(TAG, "startAdvertise: zombie=$zombie, started")
 
         val manager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         bluetoothLeAdvertiser = manager.adapter.bluetoothLeAdvertiser
@@ -56,12 +62,12 @@ class Advertiser(
 
             override fun onStartSuccess(settingsInEffect: AdvertiseSettings?) {
                 super.onStartSuccess(settingsInEffect)
-                //Toast.makeText(context, "Start succeed", Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "onStartSuccess")
             }
 
             override fun onStartFailure(errorCode: Int) {
                 super.onStartFailure(errorCode)
-                //Toast.makeText(context, "Advertise start failed. ErrorCode=$errorCode", Toast.LENGTH_SHORT).show()
+                Log.e(TAG, "onStartFailure. ErrorCode=$errorCode")
                 advertiseStarted.set(false)
             }
         }
@@ -70,13 +76,20 @@ class Advertiser(
     }
 
     fun stopService() {
+        Log.d(TAG, "stopService")
         stopAdvertise()
     }
 
     private fun stopAdvertise() {
+        Log.d(TAG, "stopAdvertise")
         if (!advertiseStarted.compareAndSet(true, false)) {
             return
         }
+        Log.d(TAG, "stopAdvertise: stop")
         bluetoothLeAdvertiser.stopAdvertising(advertiseCallback)
+    }
+
+    private companion object {
+        const val TAG : String = "Advertiser"
     }
 }

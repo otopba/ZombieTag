@@ -32,6 +32,7 @@ dependencies:
   firebase_auth: ^4.13.0
   another_flushbar: ^1.12.30
   permission_handler: ^11.0.1
+  uuid: ^4.2.1
 
 dev_dependencies:
   flutter_test:

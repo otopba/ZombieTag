@@ -4,6 +4,7 @@ import 'package:taggame/kit/persistent_names.dart';
 import 'package:taggame/log.dart';
 import 'package:taggame/models/player.dart';
 import 'package:taggame/repos/player_repository.dart';
+import 'package:uuid/uuid.dart';
 
 const _tag = 'current_player_service';
 
@@ -66,6 +67,7 @@ class CurrentPlayerService {
     player = Player(
       (b) => b
         ..id = id
+        ..uuid = const Uuid().v1()
         ..name = PersistentNames.fromText(id)
         ..rank = 'Newbie'
         ..createdAt = DateTime.now().toUtc(),

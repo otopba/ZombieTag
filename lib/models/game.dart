@@ -20,6 +20,8 @@ abstract class Game implements Built<Game, GameBuilder> {
 
   String get id;
 
+  String get uuid;
+
   BuiltList<Player> get players;
 
   GameStatus get status;

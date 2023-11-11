@@ -10,22 +10,24 @@ import 'package:taggame/models/player.dart';
 import 'package:taggame/pages/game/game_page_cubit_state.dart';
 import 'package:taggame/repos/game_repository.dart';
 import 'package:taggame/services/current_player_service.dart';
+import 'package:taggame/services/nearby_players_service.dart';
 
 const _tag = 'game_page_cubit';
 
 class GamePageCubit extends Cubit<GamePageCubitState> {
-  static const _totalCount = 10;
+  static const _gameTime = 300;
 
   GamePageCubit({
     required Game game,
   })  : _currentPlayerService = di.get(),
         _gameRepository = di.get(),
+        _nearbyPlayersService = di.get(),
         super(
           GamePageCubitState(
             (b) => b
               ..game = game.toBuilder()
               ..currentPlayerZombie = false
-              ..count = _totalCount,
+              ..count = _gameTime,
           ),
         ) {
     _init();
@@ -33,6 +35,7 @@ class GamePageCubit extends Cubit<GamePageCubitState> {
 
   final CurrentPlayerService _currentPlayerService;
   final GameRepository _gameRepository;
+  final NearbyPlayersService _nearbyPlayersService;
 
   late final StreamSubscription _gameSubscription;
   late final Timer _timer;
@@ -43,6 +46,13 @@ class GamePageCubit extends Cubit<GamePageCubitState> {
     _gameSubscription =
         _gameRepository.gameStream(state.game.id).listen(_onGameUpdate);
 
+    final currentPlayer = await _currentPlayerService.currentPlayerStream.first;
+
+    await _nearbyPlayersService.startGame(
+      game: state.game,
+      currentPlayer: currentPlayer,
+    );
+
     _timer = Timer.periodic(
       const Duration(seconds: 1),
       _onCount,
@@ -52,8 +62,9 @@ class GamePageCubit extends Cubit<GamePageCubitState> {
   @override
   Future<void> close() async {
     await super.close();
-    await _gameSubscription.cancel();
     _timer.cancel();
+    await _gameSubscription.cancel();
+    await _nearbyPlayersService.endGame();
   }
 
   Future<void> _onGameUpdate(Game? game) async {
@@ -111,6 +122,7 @@ class GamePageCubit extends Cubit<GamePageCubitState> {
     emit(state.rebuild((b) => b..count = max(0, state.count - 1)));
 
     if (state.count == 0) {
+      _timer.cancel();
       final currentPlayer =
           await _currentPlayerService.currentPlayerStream.first;
       if (currentPlayer.id == state.game.zombies.first) {

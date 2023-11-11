@@ -1,4 +1,4 @@
-package com.example.bledetector.core
+package com.example.taggame.core
 
 import android.content.Context
 import java.util.UUID

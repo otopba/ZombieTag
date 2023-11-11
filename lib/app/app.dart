@@ -110,6 +110,7 @@ class AppState extends State<App> {
     return ScreenUtilInit(
       designSize: _designSize,
       child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
         routerConfig: _cubit.routerConfig,
         localizationsDelegates: LocalizationService.localizationsDelegates,
         supportedLocales: LocalizationService.supportedLocales,

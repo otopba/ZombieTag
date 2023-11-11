@@ -20,6 +20,8 @@ class _$GameSerializer implements StructuredSerializer<Game> {
     final result = <Object?>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
+      'uuid',
+      serializers.serialize(object.uuid, specifiedType: const FullType(String)),
       'players',
       serializers.serialize(object.players,
           specifiedType:
@@ -62,6 +64,10 @@ class _$GameSerializer implements StructuredSerializer<Game> {
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
+        case 'uuid':
+          result.uuid = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
         case 'players':
           result.players.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
@@ -99,6 +105,8 @@ class _$Game extends Game {
   @override
   final String id;
   @override
+  final String uuid;
+  @override
   final BuiltList<Player> players;
   @override
   final GameStatus status;
@@ -114,6 +122,7 @@ class _$Game extends Game {
 
   _$Game._(
       {required this.id,
+      required this.uuid,
       required this.players,
       required this.status,
       this.createdAt,
@@ -121,6 +130,7 @@ class _$Game extends Game {
       required this.zombies})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'Game', 'id');
+    BuiltValueNullFieldError.checkNotNull(uuid, r'Game', 'uuid');
     BuiltValueNullFieldError.checkNotNull(players, r'Game', 'players');
     BuiltValueNullFieldError.checkNotNull(status, r'Game', 'status');
     BuiltValueNullFieldError.checkNotNull(
@@ -140,6 +150,7 @@ class _$Game extends Game {
     if (identical(other, this)) return true;
     return other is Game &&
         id == other.id &&
+        uuid == other.uuid &&
         players == other.players &&
         status == other.status &&
         createdAt == other.createdAt &&
@@ -151,6 +162,7 @@ class _$Game extends Game {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, uuid.hashCode);
     _$hash = $jc(_$hash, players.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
@@ -164,6 +176,7 @@ class _$Game extends Game {
   String toString() {
     return (newBuiltValueToStringHelper(r'Game')
           ..add('id', id)
+          ..add('uuid', uuid)
           ..add('players', players)
           ..add('status', status)
           ..add('createdAt', createdAt)
@@ -179,6 +192,10 @@ class GameBuilder implements Builder<Game, GameBuilder> {
   String? _id;
   String? get id => _$this._id;
   set id(String? id) => _$this._id = id;
+
+  String? _uuid;
+  String? get uuid => _$this._uuid;
+  set uuid(String? uuid) => _$this._uuid = uuid;
 
   ListBuilder<Player>? _players;
   ListBuilder<Player> get players =>
@@ -212,6 +229,7 @@ class GameBuilder implements Builder<Game, GameBuilder> {
     final $v = _$v;
     if ($v != null) {
       _id = $v.id;
+      _uuid = $v.uuid;
       _players = $v.players.toBuilder();
       _status = $v.status;
       _createdAt = $v.createdAt;
@@ -242,6 +260,8 @@ class GameBuilder implements Builder<Game, GameBuilder> {
       _$result = _$v ??
           new _$Game._(
               id: BuiltValueNullFieldError.checkNotNull(id, r'Game', 'id'),
+              uuid:
+                  BuiltValueNullFieldError.checkNotNull(uuid, r'Game', 'uuid'),
               players: players.build(),
               status: BuiltValueNullFieldError.checkNotNull(
                   status, r'Game', 'status'),

@@ -11,6 +11,7 @@ import 'package:taggame/models/player.dart';
 import 'package:taggame/pages/new_game/new_game_page_cubit_state.dart';
 import 'package:taggame/repos/game_repository.dart';
 import 'package:taggame/services/current_player_service.dart';
+import 'package:uuid/uuid.dart';
 
 const _tag = 'new_game_page_cubit';
 
@@ -26,7 +27,8 @@ class NewGamePageCubit extends Cubit<NewGamePageCubitState> {
                   ..id = 'id'
                   ..players = ListBuilder<Player>()
                   ..status = GameStatus.stop
-                  ..createdAt = DateTime.now().toUtc(),
+                  ..createdAt = DateTime.now().toUtc()
+                  ..uuid = 'uuid',
               ).toBuilder()
               ..loading = false,
           ),
@@ -77,7 +79,8 @@ class NewGamePageCubit extends Cubit<NewGamePageCubitState> {
             ],
           )
           ..status = GameStatus.stop
-          ..createdAt = DateTime.now().toUtc(),
+          ..createdAt = DateTime.now().toUtc()
+          ..uuid = const Uuid().v1(),
       ),
     );
 
