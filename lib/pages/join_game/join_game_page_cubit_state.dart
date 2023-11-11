@@ -1,5 +1,5 @@
 import 'package:built_value/built_value.dart';
-import 'package:taggame/models/player.dart';
+import 'package:taggame/models/game.dart';
 import 'package:built_collection/built_collection.dart';
 
 part 'join_game_page_cubit_state.g.dart';
@@ -12,5 +12,7 @@ abstract class JoinGamePageCubitState
 
   JoinGamePageCubitState._();
 
-  BuiltList<Player> get players;
+  BuiltList<Game> get games;
+
+  Game? get selectedGame;
 }

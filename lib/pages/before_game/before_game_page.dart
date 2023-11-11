@@ -98,6 +98,6 @@ class _MyHomePageState extends State<BeforeGamePage> with TGPageStateMixin {
   void _onJoinGamePressed() {
     Log.d(_tag, '_onJoinGamePressed');
 
-    const NewGameRoute().push(context);
+    const JoinGameRoute().push(context);
   }
 }

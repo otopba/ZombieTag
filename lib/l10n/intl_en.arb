@@ -11,5 +11,22 @@
   "choosingZombie": "Who will be the Zombie?",
   "zombieIs": "The zombie is",
   "run": "Run",
-  "play": "Play"
+  "play": "Play",
+  "hisGame": "{value}'s game",
+  "@subscribeWithFreeDays": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "playersCount": "Players count: {value}",
+  "@playersCount": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "searchingGames": "Searching games..."
 }
