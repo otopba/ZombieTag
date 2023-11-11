@@ -1,0 +1,13 @@
+{
+  "appTitle": "ZombieTag",
+  "appSubTitle": "Run, Evade, Survive",
+  "english": "English",
+  "unknown": "Unknown",
+  "newGame": "New game",
+  "players": "Players",
+  "start": "Start",
+  "waitingForOtherPlayers": "Waiting for other players...",
+  "choosingZombie": "Who will be the Zombie?",
+  "zombieIs": "The zombie is",
+  "run": "Run"
+}
