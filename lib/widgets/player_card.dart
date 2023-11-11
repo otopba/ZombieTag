@@ -2,6 +2,7 @@ import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:taggame/kit/text/wd_text_style.dart';
+import 'package:taggame/kit/wd_animations.dart';
 import 'package:taggame/models/player.dart';
 import 'package:taggame/tg_page_mixin.dart';
 import 'package:taggame/widgets/player_avatar.dart';
@@ -12,9 +13,13 @@ class PlayerCard extends StatefulWidget {
   const PlayerCard({
     super.key,
     required this.player,
+    required this.you,
+    required this.ready,
   });
 
   final Player player;
+  final bool you;
+  final bool ready;
 
   @override
   PlayerCardState createState() => PlayerCardState();
@@ -57,24 +62,50 @@ class PlayerCardState extends State<PlayerCard> with TGPageStateMixin {
                 child: PlayerAvatar(player: widget.player),
               ),
               SizedBox(width: 20.w),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.player.name,
-                    style: TGTextStyle.instance.style24.copyWith(
-                      color: colors.primaryTextColor,
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text.rich(
+                      TextSpan(
+                        text: widget.player.name,
+                        style: TGTextStyle.instance.style24.copyWith(
+                          color: colors.primaryTextColor,
+                        ),
+                        children: [
+                          if (widget.you)
+                            TextSpan(
+                              text: '  ${localizations.itIsYou}',
+                              style: TGTextStyle.instance.style17.copyWith(
+                                color: colors.secondaryTextColor,
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Text(
-                    widget.player.rank,
-                    style: TGTextStyle.instance.style17Semibold.copyWith(
-                      color: colors.secondaryTextColor,
+                    Text(
+                      widget.player.rank,
+                      style: TGTextStyle.instance.style17Semibold.copyWith(
+                        color: colors.secondaryTextColor,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+              ),
+              SizedBox(width: 20.w),
+              AnimatedOpacity(
+                curve: widget.ready
+                    ? TGAnimations.appearCurve
+                    : TGAnimations.disappearCurve,
+                duration: TGAnimations.duration,
+                opacity: widget.ready ? 1 : 0,
+                child: Icon(
+                  Icons.check,
+                  color: colors.accentColor,
+                  size: 20.w,
+                ),
               ),
             ],
           ),

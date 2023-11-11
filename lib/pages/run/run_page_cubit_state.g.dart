@@ -8,24 +8,35 @@ part of 'run_page_cubit_state.dart';
 
 class _$RunPageCubitState extends RunPageCubitState {
   @override
+  final Game game;
+  @override
   final bool showRun;
   @override
   final int count;
   @override
   final bool finish;
+  @override
+  final bool currentPlayerZombie;
 
   factory _$RunPageCubitState(
           [void Function(RunPageCubitStateBuilder)? updates]) =>
       (new RunPageCubitStateBuilder()..update(updates))._build();
 
   _$RunPageCubitState._(
-      {required this.showRun, required this.count, required this.finish})
+      {required this.game,
+      required this.showRun,
+      required this.count,
+      required this.finish,
+      required this.currentPlayerZombie})
       : super._() {
+    BuiltValueNullFieldError.checkNotNull(game, r'RunPageCubitState', 'game');
     BuiltValueNullFieldError.checkNotNull(
         showRun, r'RunPageCubitState', 'showRun');
     BuiltValueNullFieldError.checkNotNull(count, r'RunPageCubitState', 'count');
     BuiltValueNullFieldError.checkNotNull(
         finish, r'RunPageCubitState', 'finish');
+    BuiltValueNullFieldError.checkNotNull(
+        currentPlayerZombie, r'RunPageCubitState', 'currentPlayerZombie');
   }
 
   @override
@@ -40,17 +51,21 @@ class _$RunPageCubitState extends RunPageCubitState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is RunPageCubitState &&
+        game == other.game &&
         showRun == other.showRun &&
         count == other.count &&
-        finish == other.finish;
+        finish == other.finish &&
+        currentPlayerZombie == other.currentPlayerZombie;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
+    _$hash = $jc(_$hash, game.hashCode);
     _$hash = $jc(_$hash, showRun.hashCode);
     _$hash = $jc(_$hash, count.hashCode);
     _$hash = $jc(_$hash, finish.hashCode);
+    _$hash = $jc(_$hash, currentPlayerZombie.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -58,9 +73,11 @@ class _$RunPageCubitState extends RunPageCubitState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'RunPageCubitState')
+          ..add('game', game)
           ..add('showRun', showRun)
           ..add('count', count)
-          ..add('finish', finish))
+          ..add('finish', finish)
+          ..add('currentPlayerZombie', currentPlayerZombie))
         .toString();
   }
 }
@@ -68,6 +85,10 @@ class _$RunPageCubitState extends RunPageCubitState {
 class RunPageCubitStateBuilder
     implements Builder<RunPageCubitState, RunPageCubitStateBuilder> {
   _$RunPageCubitState? _$v;
+
+  GameBuilder? _game;
+  GameBuilder get game => _$this._game ??= new GameBuilder();
+  set game(GameBuilder? game) => _$this._game = game;
 
   bool? _showRun;
   bool? get showRun => _$this._showRun;
@@ -81,14 +102,21 @@ class RunPageCubitStateBuilder
   bool? get finish => _$this._finish;
   set finish(bool? finish) => _$this._finish = finish;
 
+  bool? _currentPlayerZombie;
+  bool? get currentPlayerZombie => _$this._currentPlayerZombie;
+  set currentPlayerZombie(bool? currentPlayerZombie) =>
+      _$this._currentPlayerZombie = currentPlayerZombie;
+
   RunPageCubitStateBuilder();
 
   RunPageCubitStateBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
+      _game = $v.game.toBuilder();
       _showRun = $v.showRun;
       _count = $v.count;
       _finish = $v.finish;
+      _currentPlayerZombie = $v.currentPlayerZombie;
       _$v = null;
     }
     return this;
@@ -109,14 +137,32 @@ class RunPageCubitStateBuilder
   RunPageCubitState build() => _build();
 
   _$RunPageCubitState _build() {
-    final _$result = _$v ??
-        new _$RunPageCubitState._(
-            showRun: BuiltValueNullFieldError.checkNotNull(
-                showRun, r'RunPageCubitState', 'showRun'),
-            count: BuiltValueNullFieldError.checkNotNull(
-                count, r'RunPageCubitState', 'count'),
-            finish: BuiltValueNullFieldError.checkNotNull(
-                finish, r'RunPageCubitState', 'finish'));
+    _$RunPageCubitState _$result;
+    try {
+      _$result = _$v ??
+          new _$RunPageCubitState._(
+              game: game.build(),
+              showRun: BuiltValueNullFieldError.checkNotNull(
+                  showRun, r'RunPageCubitState', 'showRun'),
+              count: BuiltValueNullFieldError.checkNotNull(
+                  count, r'RunPageCubitState', 'count'),
+              finish: BuiltValueNullFieldError.checkNotNull(
+                  finish, r'RunPageCubitState', 'finish'),
+              currentPlayerZombie: BuiltValueNullFieldError.checkNotNull(
+                  currentPlayerZombie,
+                  r'RunPageCubitState',
+                  'currentPlayerZombie'));
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'game';
+        game.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'RunPageCubitState', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

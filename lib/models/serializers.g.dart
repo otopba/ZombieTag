@@ -12,7 +12,13 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Player.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Player)]),
-          () => new ListBuilder<Player>()))
+          () => new ListBuilder<Player>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>()))
     .build();
 
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint

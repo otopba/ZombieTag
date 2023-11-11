@@ -4,10 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:taggame/gen/assets.gen.dart';
 import 'package:taggame/kit/text/wd_text_style.dart';
 import 'package:taggame/kit/tg_colors.dart';
-import 'package:taggame/log.dart';
+import 'package:taggame/models/game.dart';
 import 'package:taggame/pages/run/run_page_cubit.dart';
 import 'package:taggame/pages/run/run_page_cubit_state.dart';
-import 'package:taggame/services/navigator/router_service.dart';
 import 'package:taggame/tg_page_mixin.dart';
 
 const _tag = 'run_page';
@@ -15,14 +14,17 @@ const _tag = 'run_page';
 class RunPage extends StatefulWidget {
   const RunPage({
     super.key,
+    required this.game,
   });
+
+  final Game game;
 
   @override
   State<RunPage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<RunPage> with TGPageStateMixin {
-  final _cubit = RunPageCubit();
+  late final _cubit = RunPageCubit(game: widget.game);
   late RunPageCubitState _state;
 
   @override
@@ -58,10 +60,14 @@ class _MyHomePageState extends State<RunPage> with TGPageStateMixin {
                 Opacity(
                   opacity: _state.showRun ? 1 : 0,
                   child: Text(
-                    localizations.run.toUpperCase(),
+                    _state.currentPlayerZombie
+                        ? localizations.wait.toUpperCase()
+                        : localizations.run.toUpperCase(),
                     textAlign: TextAlign.center,
                     style: TGTextStyle.instance.gigant.copyWith(
-                      color: colors.accentColor,
+                      color: _state.currentPlayerZombie
+                          ? colors.accentColor
+                          : colors.accentColor,
                     ),
                   ),
                 ),
@@ -90,19 +96,5 @@ class _MyHomePageState extends State<RunPage> with TGPageStateMixin {
         ),
       ),
     );
-  }
-
-  void _onNewGamePressed() {
-    Log.d(_tag, '_onNewGamePressed');
-
-    // Navigator.of(context).push(
-    //   ConcentricPageRoute(
-    //     builder: (ctx) {
-    //       return NewGamePage();
-    //     },
-    //   ),
-    // );
-
-    const NewGameRoute().push(context);
   }
 }

@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:taggame/kit/text/wd_text_style.dart';
 import 'package:taggame/log.dart';
+import 'package:taggame/models/serializers.dart';
 import 'package:taggame/pages/new_game/new_game_page_cubit.dart';
 import 'package:taggame/pages/new_game/new_game_page_cubit_state.dart';
 import 'package:taggame/services/navigator/router_service.dart';
@@ -81,14 +84,14 @@ class _MyHomePageState extends State<NewGamePage> with TGPageStateMixin {
                 BottomWideButton(
                   centralText: localizations.start.toUpperCase(),
                   centralTextColor: colors.backgroundColor,
-                  color: _state.game.players.length > 1
+                  color: _cubit.isEverybodyReady()
                       ? colors.accentColor
                       : colors.accentColor.withOpacity(0.2),
-                  shimmer: _state.game.players.length > 1,
-                  onPressed: _state.game.players.length > 1
-                      ? _onStartGamePressed
-                      : null,
-                  enabled: _state.game.players.length > 1,
+                  shimmer: _cubit.canPressReady(),
+                  onPressed:
+                      _cubit.canPressReady() ? _onStartGamePressed : null,
+                  enabled: _cubit.canPressReady(),
+                  loading: _state.loading,
                 ),
                 SizedBox(height: 20.h),
               ],
@@ -100,16 +103,27 @@ class _MyHomePageState extends State<NewGamePage> with TGPageStateMixin {
   }
 
   Widget _itemBuilder(BuildContext context, int index) {
-    return PlayerCard(player: _state.game.players[index]);
+    final player = _state.game.players[index];
+
+    return PlayerCard(
+      player: player,
+      you: player.id == _state.currentPlayer?.id,
+      ready: _state.game.readyPlayers.contains(player.id),
+    );
   }
 
   Widget _separatorBuilder(BuildContext context, int index) {
     return SizedBox(height: 8.h);
   }
 
-  void _onStartGamePressed() {
+  Future<void> _onStartGamePressed() async {
     Log.d(_tag, '_onStartGamePressed');
 
-    const RosterRoute().push(context);
+    await _cubit.startGame();
+
+    if (!mounted) return;
+
+    RosterRoute(serializedGame: jsonEncode(serialize(_state.game)))
+        .push(context);
   }
 }

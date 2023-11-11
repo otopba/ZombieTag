@@ -15,11 +15,13 @@ class GameCard extends StatefulWidget {
     required this.game,
     required this.selected,
     required this.onPressed,
+    required this.your,
   });
 
   final Game game;
   final bool selected;
   final VoidCallback onPressed;
+  final bool your;
 
   @override
   GameCardState createState() => GameCardState();
@@ -66,12 +68,26 @@ class GameCardState extends State<GameCard> with TGPageStateMixin {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    localizations.hisGame(widget.game.players.first.name),
-                    style: TGTextStyle.instance.style24.copyWith(
-                      color: widget.selected
-                          ? TGColors.blackColor
-                          : colors.primaryTextColor,
+                  Text.rich(
+                    TextSpan(
+                      text:
+                          localizations.hisGame(widget.game.players.first.name),
+                      style: TGTextStyle.instance.style24.copyWith(
+                        color: widget.selected
+                            ? TGColors.blackColor
+                            : colors.primaryTextColor,
+                      ),
+                      children: [
+                        if (widget.your)
+                          TextSpan(
+                            text: '  ${localizations.itIsYour}',
+                            style: TGTextStyle.instance.style17.copyWith(
+                              color: widget.selected
+                                  ? TGColors.blackColor.withOpacity(0.8)
+                                  : colors.secondaryTextColor,
+                            ),
+                          ),
+                      ],
                     ),
                   ),
                   Text(

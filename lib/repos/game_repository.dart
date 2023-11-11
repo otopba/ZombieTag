@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:taggame/log.dart';
 import 'package:taggame/models/firestore_mapper.dart';
 import 'package:taggame/models/game.dart';
-import 'package:taggame/models/game_status.dart';
+import 'package:taggame/models/player.dart';
 import 'package:taggame/models/serializers.dart';
 
 const _tag = 'game_repository';
@@ -27,6 +27,17 @@ class GameRepository {
         .add(game)
         .then((it) => it.get())
         .then((it) => it.data()!);
+  }
+
+  Future<void> joinGame({
+    required String gameId,
+    required Player player,
+  }) {
+    Log.d(_tag, 'joinGame: gameId = $gameId, player = ${player.id}');
+
+    return FirebaseFirestore.instance.doc('games/$gameId').update({
+      'players': FieldValue.arrayUnion([serialize(player)])
+    });
   }
 
   Stream<Game?> gameStream(String gameId) {
@@ -56,5 +67,26 @@ class GameRepository {
               .cast<Game>()
               .toBuiltList(),
         );
+  }
+
+  Future<void> ready({
+    required String gameId,
+    required String playerId,
+  }) {
+    Log.d(_tag, 'ready: gameId = $gameId, player = $playerId');
+
+    return FirebaseFirestore.instance.doc('games/$gameId').update({
+      'readyPlayers': FieldValue.arrayUnion([playerId])
+    });
+  }
+
+  Future<void> run({
+    required String gameId,
+    required String zombieId,
+  }) {
+    return FirebaseFirestore.instance.doc('games/$gameId').update({
+      'status': 'run',
+      'zombies': [zombieId],
+    });
   }
 }

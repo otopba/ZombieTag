@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:taggame/kit/text/wd_text_style.dart';
+import 'package:taggame/models/game.dart';
+import 'package:taggame/models/serializers.dart';
 import 'package:taggame/pages/roster/roster_page_cubit.dart';
 import 'package:taggame/pages/roster/roster_page_cubit_state.dart';
 import 'package:taggame/services/navigator/router_service.dart';
@@ -15,7 +19,10 @@ const _tag = 'roster_page';
 class RosterPage extends StatefulWidget {
   const RosterPage({
     super.key,
+    required this.game,
   });
+
+  final Game game;
 
   @override
   State<RosterPage> createState() => _MyHomePageState();
@@ -26,7 +33,7 @@ class _MyHomePageState extends State<RosterPage>
   final _radius = 120.w;
   final _avatarSize = 100.w;
 
-  final _cubit = RosterPageCubit();
+  late final _cubit = RosterPageCubit(game: widget.game);
   late RosterPageCubitState _state;
 
   late final AnimationController _spinController;
@@ -91,7 +98,9 @@ class _MyHomePageState extends State<RosterPage>
       Future.delayed(const Duration(milliseconds: 500)).then(
         (value) {
           if (!mounted) return;
-          const ZombieSelectedRoute().push(context);
+          ZombieSelectedRoute(
+            serializedGame: jsonEncode(serialize(_state.game)),
+          ).push(context);
         },
       );
     }
@@ -130,7 +139,7 @@ class _MyHomePageState extends State<RosterPage>
                       turns: _spinController,
                       child: CircularLayout(
                         radius: _radius,
-                        children: _state.players
+                        children: _state.game.players
                             .map(
                               (it) => Hero(
                                 tag: it.id,

@@ -13,6 +13,11 @@ abstract class Game implements Built<Game, GameBuilder> {
 
   static Serializer<Game> get serializer => _$gameSerializer;
 
+  @BuiltValueHook(initializeBuilder: true)
+  static void _setDefaults(GameBuilder b) => b
+    ..readyPlayers = ListBuilder<String>()
+    ..zombies = ListBuilder<String>();
+
   String get id;
 
   BuiltList<Player> get players;
@@ -20,4 +25,8 @@ abstract class Game implements Built<Game, GameBuilder> {
   GameStatus get status;
 
   DateTime? get createdAt;
+
+  BuiltList<String> get readyPlayers;
+
+  BuiltList<String> get zombies;
 }

@@ -11,15 +11,20 @@ class _$NewGamePageCubitState extends NewGamePageCubitState {
   final Game game;
   @override
   final Player? currentPlayer;
+  @override
+  final bool loading;
 
   factory _$NewGamePageCubitState(
           [void Function(NewGamePageCubitStateBuilder)? updates]) =>
       (new NewGamePageCubitStateBuilder()..update(updates))._build();
 
-  _$NewGamePageCubitState._({required this.game, this.currentPlayer})
+  _$NewGamePageCubitState._(
+      {required this.game, this.currentPlayer, required this.loading})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         game, r'NewGamePageCubitState', 'game');
+    BuiltValueNullFieldError.checkNotNull(
+        loading, r'NewGamePageCubitState', 'loading');
   }
 
   @override
@@ -36,7 +41,8 @@ class _$NewGamePageCubitState extends NewGamePageCubitState {
     if (identical(other, this)) return true;
     return other is NewGamePageCubitState &&
         game == other.game &&
-        currentPlayer == other.currentPlayer;
+        currentPlayer == other.currentPlayer &&
+        loading == other.loading;
   }
 
   @override
@@ -44,6 +50,7 @@ class _$NewGamePageCubitState extends NewGamePageCubitState {
     var _$hash = 0;
     _$hash = $jc(_$hash, game.hashCode);
     _$hash = $jc(_$hash, currentPlayer.hashCode);
+    _$hash = $jc(_$hash, loading.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -52,7 +59,8 @@ class _$NewGamePageCubitState extends NewGamePageCubitState {
   String toString() {
     return (newBuiltValueToStringHelper(r'NewGamePageCubitState')
           ..add('game', game)
-          ..add('currentPlayer', currentPlayer))
+          ..add('currentPlayer', currentPlayer)
+          ..add('loading', loading))
         .toString();
   }
 }
@@ -71,6 +79,10 @@ class NewGamePageCubitStateBuilder
   set currentPlayer(PlayerBuilder? currentPlayer) =>
       _$this._currentPlayer = currentPlayer;
 
+  bool? _loading;
+  bool? get loading => _$this._loading;
+  set loading(bool? loading) => _$this._loading = loading;
+
   NewGamePageCubitStateBuilder();
 
   NewGamePageCubitStateBuilder get _$this {
@@ -78,6 +90,7 @@ class NewGamePageCubitStateBuilder
     if ($v != null) {
       _game = $v.game.toBuilder();
       _currentPlayer = $v.currentPlayer?.toBuilder();
+      _loading = $v.loading;
       _$v = null;
     }
     return this;
@@ -102,7 +115,10 @@ class NewGamePageCubitStateBuilder
     try {
       _$result = _$v ??
           new _$NewGamePageCubitState._(
-              game: game.build(), currentPlayer: _currentPlayer?.build());
+              game: game.build(),
+              currentPlayer: _currentPlayer?.build(),
+              loading: BuiltValueNullFieldError.checkNotNull(
+                  loading, r'NewGamePageCubitState', 'loading'));
     } catch (_) {
       late String _$failedField;
       try {

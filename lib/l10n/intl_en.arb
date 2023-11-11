@@ -28,5 +28,9 @@
       }
     }
   },
-  "searchingGames": "Searching games..."
+  "searchingGames": "Searching games...",
+  "itIsYour": "It's your",
+  "itIsYou": "It's you",
+  "ready": "Ready",
+  "wait": "Wait"
 }

@@ -10,6 +10,7 @@ import 'package:taggame/services/navigator/router_service.dart';
 import 'package:taggame/tg_page_mixin.dart';
 import 'package:taggame/widgets/bottom_wide_button.dart';
 import 'package:taggame/widgets/game_card.dart';
+import 'package:taggame/widgets/player_head.dart';
 
 const _tag = 'join_game_page';
 
@@ -34,10 +35,25 @@ class _MyHomePageState extends State<JoinGamePage> with TGPageStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<JoinGamePageCubit, JoinGamePageCubitState>(
+    return BlocConsumer<JoinGamePageCubit, JoinGamePageCubitState>(
       bloc: _cubit,
       builder: _builder,
+      listenWhen: _listenWhen,
+      listener: _listener,
     );
+  }
+
+  bool _listenWhen(
+    JoinGamePageCubitState previous,
+    JoinGamePageCubitState current,
+  ) {
+    return current.finish != previous.finish;
+  }
+
+  void _listener(BuildContext context, JoinGamePageCubitState state) {
+    if (!state.finish) return;
+
+    GameLobbyRoute(gameId: state.selectedGame!.id).push(context);
   }
 
   Widget _builder(
@@ -55,6 +71,8 @@ class _MyHomePageState extends State<JoinGamePage> with TGPageStateMixin {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                SizedBox(height: 10.h),
+                const PlayerHead(),
                 SizedBox(height: 100.h),
                 Text(
                   localizations.joinGame,
@@ -74,21 +92,25 @@ class _MyHomePageState extends State<JoinGamePage> with TGPageStateMixin {
                 SizedBox(height: 20.h),
                 Expanded(
                   child: ListView.separated(
+                    physics: const BouncingScrollPhysics(),
                     itemBuilder: _itemBuilder,
                     separatorBuilder: _separatorBuilder,
                     itemCount: _state.games.length,
                   ),
                 ),
+                SizedBox(height: 20.h),
                 BottomWideButton(
                   centralText: localizations.joinGame.toUpperCase(),
                   centralTextColor: colors.backgroundColor,
-                  shimmer: _state.selectedGame != null,
-                  enabled: _state.selectedGame != null,
-                  onPressed:
-                      _state.selectedGame != null ? _onStartGamePressed : null,
+                  shimmer: (_state.selectedGame != null && !_state.loading),
+                  enabled: (_state.selectedGame != null && !_state.loading),
+                  onPressed: (_state.selectedGame != null && !_state.loading)
+                      ? _onJoinGamePressed
+                      : null,
                   color: _state.selectedGame != null
                       ? colors.accentColor
                       : colors.accentColor.withOpacity(0.2),
+                  loading: _state.loading,
                 ),
                 SizedBox(height: 20.h),
               ],
@@ -105,7 +127,8 @@ class _MyHomePageState extends State<JoinGamePage> with TGPageStateMixin {
     return GameCard(
       game: game,
       selected: game.id == _state.selectedGame?.id,
-      onPressed: () => _onGamePressed(game),
+      onPressed: () => _state.loading ? null : _onGamePressed(game),
+      your: game.players.first.id == _state.currentPlayer?.id,
     );
   }
 
@@ -113,10 +136,10 @@ class _MyHomePageState extends State<JoinGamePage> with TGPageStateMixin {
     return SizedBox(height: 8.h);
   }
 
-  void _onStartGamePressed() {
-    Log.d(_tag, '_onStartGamePressed');
+  void _onJoinGamePressed() {
+    Log.d(_tag, '_onJoinGamePressed');
 
-    const RosterRoute().push(context);
+    _cubit.join();
   }
 
   void _onGamePressed(Game game) {

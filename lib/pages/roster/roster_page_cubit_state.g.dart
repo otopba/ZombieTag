@@ -8,7 +8,7 @@ part of 'roster_page_cubit_state.dart';
 
 class _$RosterPageCubitState extends RosterPageCubitState {
   @override
-  final BuiltList<Player> players;
+  final Game game;
   @override
   final bool spinning;
 
@@ -16,10 +16,10 @@ class _$RosterPageCubitState extends RosterPageCubitState {
           [void Function(RosterPageCubitStateBuilder)? updates]) =>
       (new RosterPageCubitStateBuilder()..update(updates))._build();
 
-  _$RosterPageCubitState._({required this.players, required this.spinning})
+  _$RosterPageCubitState._({required this.game, required this.spinning})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        players, r'RosterPageCubitState', 'players');
+        game, r'RosterPageCubitState', 'game');
     BuiltValueNullFieldError.checkNotNull(
         spinning, r'RosterPageCubitState', 'spinning');
   }
@@ -37,14 +37,14 @@ class _$RosterPageCubitState extends RosterPageCubitState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is RosterPageCubitState &&
-        players == other.players &&
+        game == other.game &&
         spinning == other.spinning;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
-    _$hash = $jc(_$hash, players.hashCode);
+    _$hash = $jc(_$hash, game.hashCode);
     _$hash = $jc(_$hash, spinning.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -53,7 +53,7 @@ class _$RosterPageCubitState extends RosterPageCubitState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'RosterPageCubitState')
-          ..add('players', players)
+          ..add('game', game)
           ..add('spinning', spinning))
         .toString();
   }
@@ -63,10 +63,9 @@ class RosterPageCubitStateBuilder
     implements Builder<RosterPageCubitState, RosterPageCubitStateBuilder> {
   _$RosterPageCubitState? _$v;
 
-  ListBuilder<Player>? _players;
-  ListBuilder<Player> get players =>
-      _$this._players ??= new ListBuilder<Player>();
-  set players(ListBuilder<Player>? players) => _$this._players = players;
+  GameBuilder? _game;
+  GameBuilder get game => _$this._game ??= new GameBuilder();
+  set game(GameBuilder? game) => _$this._game = game;
 
   bool? _spinning;
   bool? get spinning => _$this._spinning;
@@ -77,7 +76,7 @@ class RosterPageCubitStateBuilder
   RosterPageCubitStateBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _players = $v.players.toBuilder();
+      _game = $v.game.toBuilder();
       _spinning = $v.spinning;
       _$v = null;
     }
@@ -103,14 +102,14 @@ class RosterPageCubitStateBuilder
     try {
       _$result = _$v ??
           new _$RosterPageCubitState._(
-              players: players.build(),
+              game: game.build(),
               spinning: BuiltValueNullFieldError.checkNotNull(
                   spinning, r'RosterPageCubitState', 'spinning'));
     } catch (_) {
       late String _$failedField;
       try {
-        _$failedField = 'players';
-        players.build();
+        _$failedField = 'game';
+        game.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'RosterPageCubitState', _$failedField, e.toString());

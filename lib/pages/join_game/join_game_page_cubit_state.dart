@@ -1,6 +1,7 @@
 import 'package:built_value/built_value.dart';
 import 'package:taggame/models/game.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:taggame/models/player.dart';
 
 part 'join_game_page_cubit_state.g.dart';
 
@@ -15,4 +16,10 @@ abstract class JoinGamePageCubitState
   BuiltList<Game> get games;
 
   Game? get selectedGame;
+
+  bool get loading;
+
+  bool get finish;
+
+  Player? get currentPlayer;
 }

@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:taggame/kit/text/wd_text_style.dart';
+import 'package:taggame/models/game.dart';
+import 'package:taggame/models/serializers.dart';
 import 'package:taggame/pages/zombie_seleted/zombie_seleted_page_cubit.dart';
 import 'package:taggame/pages/zombie_seleted/zombie_seleted_page_cubit_state.dart';
 import 'package:taggame/services/navigator/router_service.dart';
@@ -13,7 +17,10 @@ const _tag = 'zombie_seleted';
 class ZombieSelectedPage extends StatefulWidget {
   const ZombieSelectedPage({
     super.key,
+    required this.game,
   });
+
+  final Game game;
 
   @override
   State<ZombieSelectedPage> createState() => _MyHomePageState();
@@ -21,7 +28,7 @@ class ZombieSelectedPage extends StatefulWidget {
 
 class _MyHomePageState extends State<ZombieSelectedPage>
     with TGPageStateMixin, TickerProviderStateMixin {
-  final _cubit = ZombieSelectedPageCubit();
+  late final _cubit = ZombieSelectedPageCubit(game: widget.game);
   late ZombieSelectedPageCubitState _state;
 
   late final AnimationController _pulseController;
@@ -67,9 +74,9 @@ class _MyHomePageState extends State<ZombieSelectedPage>
   }
 
   void _listener(BuildContext context, ZombieSelectedPageCubitState state) {
-    if(!state.ready) return;
+    if (!state.ready) return;
 
-    const RunRoute().push(context);
+    RunRoute(serializedGame: jsonEncode(serialize(state.game))).push(context);
   }
 
   Widget _builder(
@@ -96,7 +103,7 @@ class _MyHomePageState extends State<ZombieSelectedPage>
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  _state.player.name.toUpperCase(),
+                  _cubit.getZombiePlayer().name.toUpperCase(),
                   style: TGTextStyle.instance.styleH1.copyWith(
                     color: colors.accentColor,
                   ),
@@ -104,11 +111,11 @@ class _MyHomePageState extends State<ZombieSelectedPage>
                 ),
                 SizedBox(height: 100.h),
                 Hero(
-                  tag: _state.player.id,
+                  tag: _cubit.getZombiePlayer().id,
                   child: ScaleTransition(
                     scale: _pulseAnimation,
                     child: PlayerAvatar(
-                      player: _state.player,
+                      player: _cubit.getZombiePlayer(),
                       size: 200.w,
                     ),
                   ),

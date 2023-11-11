@@ -1,21 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taggame/log.dart';
+import 'package:taggame/models/game.dart';
 import 'package:taggame/models/player.dart';
 import 'package:taggame/pages/zombie_seleted/zombie_seleted_page_cubit_state.dart';
 
 const _tag = 'zombie_seleted_page_cubit';
 
 class ZombieSelectedPageCubit extends Cubit<ZombieSelectedPageCubitState> {
-  ZombieSelectedPageCubit()
-      : super(
+  ZombieSelectedPageCubit({
+    required Game game,
+  }) : super(
           ZombieSelectedPageCubitState(
             (b) => b
-              ..player = Player(
-                (b) => b
-                  ..id = '1'
-                  ..name = 'Oliver'
-                  ..rank = 'Newbie',
-              ).toBuilder()
+              ..game = game.toBuilder()
               ..ready = false,
           ),
         ) {
@@ -30,5 +27,11 @@ class ZombieSelectedPageCubit extends Cubit<ZombieSelectedPageCubitState> {
     if (isClosed) return;
 
     emit(state.rebuild((b) => b..ready = true));
+  }
+
+  Player getZombiePlayer() {
+    final zombie = state.game.zombies.first;
+
+    return state.game.players.firstWhere((it) => it.id == zombie);
   }
 }

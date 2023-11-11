@@ -8,6 +8,7 @@ import 'package:taggame/pages/before_game/before_game_page_cubit_state.dart';
 import 'package:taggame/services/navigator/router_service.dart';
 import 'package:taggame/tg_page_mixin.dart';
 import 'package:taggame/widgets/bottom_wide_button.dart';
+import 'package:taggame/widgets/player_head.dart';
 
 const _tag = 'before_game_page';
 
@@ -53,6 +54,8 @@ class _MyHomePageState extends State<BeforeGamePage> with TGPageStateMixin {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                SizedBox(height: 10.h),
+                const PlayerHead(),
                 SizedBox(height: 100.h),
                 Text(
                   localizations.appTitle,

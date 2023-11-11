@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,7 +27,8 @@ class NewGamePageCubit extends Cubit<NewGamePageCubitState> {
                   ..players = ListBuilder<Player>()
                   ..status = GameStatus.stop
                   ..createdAt = DateTime.now().toUtc(),
-              ).toBuilder(),
+              ).toBuilder()
+              ..loading = false,
           ),
         ) {
     _init();
@@ -47,7 +49,16 @@ class NewGamePageCubit extends Cubit<NewGamePageCubitState> {
       state.rebuild(
         (b) => b
           ..currentPlayer = currentPlayer.toBuilder()
-          ..game.players = ListBuilder([currentPlayer]),
+          ..game.players = ListBuilder<Player>(
+            [
+              currentPlayer,
+            ],
+          )
+          ..game.readyPlayers = ListBuilder<String>(
+            [
+              currentPlayer.id,
+            ],
+          ),
       ),
     );
 
@@ -55,7 +66,16 @@ class NewGamePageCubit extends Cubit<NewGamePageCubitState> {
       Game(
         (b) => b
           ..id = 'id'
-          ..players = ListBuilder<Player>([currentPlayer])
+          ..players = ListBuilder<Player>(
+            [
+              currentPlayer,
+            ],
+          )
+          ..readyPlayers = ListBuilder<String>(
+            [
+              currentPlayer.id,
+            ],
+          )
           ..status = GameStatus.stop
           ..createdAt = DateTime.now().toUtc(),
       ),
@@ -80,5 +100,38 @@ class NewGamePageCubit extends Cubit<NewGamePageCubitState> {
     if (isClosed) return;
 
     emit(state.rebuild((b) => b..game = game.toBuilder()));
+  }
+
+  Future<void> startGame() async {
+    emit(state.rebuild((b) => b..loading = true));
+
+    final zombieId =
+        state.game.players[Random().nextInt(state.game.players.length)].id;
+
+    await _gameRepository.run(
+      gameId: state.game.id,
+      zombieId: zombieId,
+    );
+
+    if (!isClosed) {
+      emit(
+        state.rebuild(
+          (b) => b
+            ..loading = false
+            ..game.zombies = ListBuilder<String>(
+              [zombieId],
+            ),
+        ),
+      );
+    }
+  }
+
+  bool canPressReady() {
+    return isEverybodyReady() && !state.loading;
+  }
+
+  bool isEverybodyReady() {
+    return state.game.readyPlayers.length == state.game.players.length &&
+        state.game.players.length > 1;
   }
 }

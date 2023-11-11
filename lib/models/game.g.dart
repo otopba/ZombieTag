@@ -27,6 +27,14 @@ class _$GameSerializer implements StructuredSerializer<Game> {
       'status',
       serializers.serialize(object.status,
           specifiedType: const FullType(GameStatus)),
+      'readyPlayers',
+      serializers.serialize(object.readyPlayers,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(String)])),
+      'zombies',
+      serializers.serialize(object.zombies,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(String)])),
     ];
     Object? value;
     value = object.createdAt;
@@ -68,6 +76,18 @@ class _$GameSerializer implements StructuredSerializer<Game> {
           result.createdAt = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
           break;
+        case 'readyPlayers':
+          result.readyPlayers.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'zombies':
+          result.zombies.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
       }
     }
 
@@ -84,6 +104,10 @@ class _$Game extends Game {
   final GameStatus status;
   @override
   final DateTime? createdAt;
+  @override
+  final BuiltList<String> readyPlayers;
+  @override
+  final BuiltList<String> zombies;
 
   factory _$Game([void Function(GameBuilder)? updates]) =>
       (new GameBuilder()..update(updates))._build();
@@ -92,11 +116,16 @@ class _$Game extends Game {
       {required this.id,
       required this.players,
       required this.status,
-      this.createdAt})
+      this.createdAt,
+      required this.readyPlayers,
+      required this.zombies})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'Game', 'id');
     BuiltValueNullFieldError.checkNotNull(players, r'Game', 'players');
     BuiltValueNullFieldError.checkNotNull(status, r'Game', 'status');
+    BuiltValueNullFieldError.checkNotNull(
+        readyPlayers, r'Game', 'readyPlayers');
+    BuiltValueNullFieldError.checkNotNull(zombies, r'Game', 'zombies');
   }
 
   @override
@@ -113,7 +142,9 @@ class _$Game extends Game {
         id == other.id &&
         players == other.players &&
         status == other.status &&
-        createdAt == other.createdAt;
+        createdAt == other.createdAt &&
+        readyPlayers == other.readyPlayers &&
+        zombies == other.zombies;
   }
 
   @override
@@ -123,6 +154,8 @@ class _$Game extends Game {
     _$hash = $jc(_$hash, players.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, readyPlayers.hashCode);
+    _$hash = $jc(_$hash, zombies.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -133,7 +166,9 @@ class _$Game extends Game {
           ..add('id', id)
           ..add('players', players)
           ..add('status', status)
-          ..add('createdAt', createdAt))
+          ..add('createdAt', createdAt)
+          ..add('readyPlayers', readyPlayers)
+          ..add('zombies', zombies))
         .toString();
   }
 }
@@ -158,7 +193,20 @@ class GameBuilder implements Builder<Game, GameBuilder> {
   DateTime? get createdAt => _$this._createdAt;
   set createdAt(DateTime? createdAt) => _$this._createdAt = createdAt;
 
-  GameBuilder();
+  ListBuilder<String>? _readyPlayers;
+  ListBuilder<String> get readyPlayers =>
+      _$this._readyPlayers ??= new ListBuilder<String>();
+  set readyPlayers(ListBuilder<String>? readyPlayers) =>
+      _$this._readyPlayers = readyPlayers;
+
+  ListBuilder<String>? _zombies;
+  ListBuilder<String> get zombies =>
+      _$this._zombies ??= new ListBuilder<String>();
+  set zombies(ListBuilder<String>? zombies) => _$this._zombies = zombies;
+
+  GameBuilder() {
+    Game._setDefaults(this);
+  }
 
   GameBuilder get _$this {
     final $v = _$v;
@@ -167,6 +215,8 @@ class GameBuilder implements Builder<Game, GameBuilder> {
       _players = $v.players.toBuilder();
       _status = $v.status;
       _createdAt = $v.createdAt;
+      _readyPlayers = $v.readyPlayers.toBuilder();
+      _zombies = $v.zombies.toBuilder();
       _$v = null;
     }
     return this;
@@ -195,12 +245,19 @@ class GameBuilder implements Builder<Game, GameBuilder> {
               players: players.build(),
               status: BuiltValueNullFieldError.checkNotNull(
                   status, r'Game', 'status'),
-              createdAt: createdAt);
+              createdAt: createdAt,
+              readyPlayers: readyPlayers.build(),
+              zombies: zombies.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'players';
         players.build();
+
+        _$failedField = 'readyPlayers';
+        readyPlayers.build();
+        _$failedField = 'zombies';
+        zombies.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'Game', _$failedField, e.toString());

@@ -1,8 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:taggame/models/game.dart';
+import 'package:taggame/models/serializers.dart';
 import 'package:taggame/pages/before_game/before_game_page.dart';
+import 'package:taggame/pages/game_lobby/game_lobby_page.dart';
 import 'package:taggame/pages/home/home_page.dart';
 import 'package:taggame/pages/join_game/join_game_page.dart';
 import 'package:taggame/pages/new_game/new_game_page.dart';
@@ -78,25 +82,59 @@ class JoinGameRoute extends GoRouteData {
 
 @TypedGoRoute<RosterRoute>(path: '/roster')
 class RosterRoute extends GoRouteData {
-  const RosterRoute();
+  const RosterRoute({
+    required this.serializedGame,
+  });
+
+  final String serializedGame;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const RosterPage();
+  Widget build(BuildContext context, GoRouterState state) {
+    final game = deserialize<Game>(jsonDecode(serializedGame))!;
+    return RosterPage(game: game);
+  }
 }
 
 @TypedGoRoute<ZombieSelectedRoute>(path: '/zombieSelected')
 class ZombieSelectedRoute extends GoRouteData {
-  const ZombieSelectedRoute();
+  const ZombieSelectedRoute({
+    required this.serializedGame,
+  });
+
+  final String serializedGame;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      const ZombieSelectedPage();
+  Widget build(BuildContext context, GoRouterState state) {
+    final game = deserialize<Game>(jsonDecode(serializedGame))!;
+    return ZombieSelectedPage(game: game);
+  }
 }
 
 @TypedGoRoute<RunRoute>(path: '/run')
 class RunRoute extends GoRouteData {
-  const RunRoute();
+  const RunRoute({
+    required this.serializedGame,
+  });
+
+  final String serializedGame;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const RunPage();
+  Widget build(BuildContext context, GoRouterState state) {
+    final game = deserialize<Game>(jsonDecode(serializedGame))!;
+
+    return RunPage(game: game);
+  }
+}
+
+@TypedGoRoute<GameLobbyRoute>(path: '/gameLobby')
+class GameLobbyRoute extends GoRouteData {
+  const GameLobbyRoute({
+    required this.gameId,
+  });
+
+  final String gameId;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      GameLobbyPage(gameId: gameId);
 }

@@ -1,4 +1,5 @@
 import 'package:built_value/built_value.dart';
+import 'package:taggame/models/game.dart';
 import 'package:taggame/models/player.dart';
 
 part 'zombie_seleted_page_cubit_state.g.dart';
@@ -13,7 +14,7 @@ abstract class ZombieSelectedPageCubitState
 
   ZombieSelectedPageCubitState._();
 
-  Player get player;
+  Game get game;
 
   bool get ready;
 }

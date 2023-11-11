@@ -8,7 +8,7 @@ part of 'zombie_seleted_page_cubit_state.dart';
 
 class _$ZombieSelectedPageCubitState extends ZombieSelectedPageCubitState {
   @override
-  final Player player;
+  final Game game;
   @override
   final bool ready;
 
@@ -16,10 +16,10 @@ class _$ZombieSelectedPageCubitState extends ZombieSelectedPageCubitState {
           [void Function(ZombieSelectedPageCubitStateBuilder)? updates]) =>
       (new ZombieSelectedPageCubitStateBuilder()..update(updates))._build();
 
-  _$ZombieSelectedPageCubitState._({required this.player, required this.ready})
+  _$ZombieSelectedPageCubitState._({required this.game, required this.ready})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        player, r'ZombieSelectedPageCubitState', 'player');
+        game, r'ZombieSelectedPageCubitState', 'game');
     BuiltValueNullFieldError.checkNotNull(
         ready, r'ZombieSelectedPageCubitState', 'ready');
   }
@@ -37,14 +37,14 @@ class _$ZombieSelectedPageCubitState extends ZombieSelectedPageCubitState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is ZombieSelectedPageCubitState &&
-        player == other.player &&
+        game == other.game &&
         ready == other.ready;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
-    _$hash = $jc(_$hash, player.hashCode);
+    _$hash = $jc(_$hash, game.hashCode);
     _$hash = $jc(_$hash, ready.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -53,7 +53,7 @@ class _$ZombieSelectedPageCubitState extends ZombieSelectedPageCubitState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'ZombieSelectedPageCubitState')
-          ..add('player', player)
+          ..add('game', game)
           ..add('ready', ready))
         .toString();
   }
@@ -65,9 +65,9 @@ class ZombieSelectedPageCubitStateBuilder
             ZombieSelectedPageCubitStateBuilder> {
   _$ZombieSelectedPageCubitState? _$v;
 
-  PlayerBuilder? _player;
-  PlayerBuilder get player => _$this._player ??= new PlayerBuilder();
-  set player(PlayerBuilder? player) => _$this._player = player;
+  GameBuilder? _game;
+  GameBuilder get game => _$this._game ??= new GameBuilder();
+  set game(GameBuilder? game) => _$this._game = game;
 
   bool? _ready;
   bool? get ready => _$this._ready;
@@ -78,7 +78,7 @@ class ZombieSelectedPageCubitStateBuilder
   ZombieSelectedPageCubitStateBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _player = $v.player.toBuilder();
+      _game = $v.game.toBuilder();
       _ready = $v.ready;
       _$v = null;
     }
@@ -104,14 +104,14 @@ class ZombieSelectedPageCubitStateBuilder
     try {
       _$result = _$v ??
           new _$ZombieSelectedPageCubitState._(
-              player: player.build(),
+              game: game.build(),
               ready: BuiltValueNullFieldError.checkNotNull(
                   ready, r'ZombieSelectedPageCubitState', 'ready'));
     } catch (_) {
       late String _$failedField;
       try {
-        _$failedField = 'player';
-        player.build();
+        _$failedField = 'game';
+        game.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'ZombieSelectedPageCubitState', _$failedField, e.toString());

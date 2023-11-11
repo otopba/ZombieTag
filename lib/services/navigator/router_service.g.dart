@@ -14,6 +14,7 @@ List<RouteBase> get $appRoutes => [
       $rosterRoute,
       $zombieSelectedRoute,
       $runRoute,
+      $gameLobbyRoute,
     ];
 
 RouteBase get $homeRoute => GoRouteData.$route(
@@ -111,10 +112,15 @@ RouteBase get $rosterRoute => GoRouteData.$route(
     );
 
 extension $RosterRouteExtension on RosterRoute {
-  static RosterRoute _fromState(GoRouterState state) => const RosterRoute();
+  static RosterRoute _fromState(GoRouterState state) => RosterRoute(
+        serializedGame: state.uri.queryParameters['serialized-game']!,
+      );
 
   String get location => GoRouteData.$location(
         '/roster',
+        queryParams: {
+          'serialized-game': serializedGame,
+        },
       );
 
   void go(BuildContext context) => context.go(location);
@@ -134,10 +140,15 @@ RouteBase get $zombieSelectedRoute => GoRouteData.$route(
 
 extension $ZombieSelectedRouteExtension on ZombieSelectedRoute {
   static ZombieSelectedRoute _fromState(GoRouterState state) =>
-      const ZombieSelectedRoute();
+      ZombieSelectedRoute(
+        serializedGame: state.uri.queryParameters['serialized-game']!,
+      );
 
   String get location => GoRouteData.$location(
         '/zombieSelected',
+        queryParams: {
+          'serialized-game': serializedGame,
+        },
       );
 
   void go(BuildContext context) => context.go(location);
@@ -156,10 +167,42 @@ RouteBase get $runRoute => GoRouteData.$route(
     );
 
 extension $RunRouteExtension on RunRoute {
-  static RunRoute _fromState(GoRouterState state) => const RunRoute();
+  static RunRoute _fromState(GoRouterState state) => RunRoute(
+        serializedGame: state.uri.queryParameters['serialized-game']!,
+      );
 
   String get location => GoRouteData.$location(
         '/run',
+        queryParams: {
+          'serialized-game': serializedGame,
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $gameLobbyRoute => GoRouteData.$route(
+      path: '/gameLobby',
+      factory: $GameLobbyRouteExtension._fromState,
+    );
+
+extension $GameLobbyRouteExtension on GameLobbyRoute {
+  static GameLobbyRoute _fromState(GoRouterState state) => GameLobbyRoute(
+        gameId: state.uri.queryParameters['game-id']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/gameLobby',
+        queryParams: {
+          'game-id': gameId,
+        },
       );
 
   void go(BuildContext context) => context.go(location);
