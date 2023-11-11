@@ -56,5 +56,10 @@
         "type": "int"
       }
     }
-  }
+  },
+  "settings": "Settings",
+  "ok": "Ok",
+  "cancel": "Cancel",
+  "permissionTitle": "Please allow this permission",
+  "permissionSubtitle": "Zombie whats it"
 }

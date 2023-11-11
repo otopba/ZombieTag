@@ -17,6 +17,7 @@ List<RouteBase> get $appRoutes => [
       $gameLobbyRoute,
       $gameRoute,
       $resultRoute,
+      $permissionSettingsDialogRoute,
     ];
 
 RouteBase get $homeRoute => GoRouteData.$route(
@@ -269,4 +270,50 @@ extension $ResultRouteExtension on ResultRoute {
       context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $permissionSettingsDialogRoute => GoRouteData.$route(
+      path: '/permissionSettingsDialog',
+      parentNavigatorKey: PermissionSettingsDialogRoute.$parentNavigatorKey,
+      factory: $PermissionSettingsDialogRouteExtension._fromState,
+    );
+
+extension $PermissionSettingsDialogRouteExtension
+    on PermissionSettingsDialogRoute {
+  static PermissionSettingsDialogRoute _fromState(GoRouterState state) =>
+      PermissionSettingsDialogRoute(
+        title: state.uri.queryParameters['title']!,
+        permissionRationale: state.uri.queryParameters['permission-rationale']!,
+        settingsMode:
+            _$boolConverter(state.uri.queryParameters['settings-mode']!),
+      );
+
+  String get location => GoRouteData.$location(
+        '/permissionSettingsDialog',
+        queryParams: {
+          'title': title,
+          'permission-rationale': permissionRationale,
+          'settings-mode': settingsMode.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+bool _$boolConverter(String value) {
+  switch (value) {
+    case 'true':
+      return true;
+    case 'false':
+      return false;
+    default:
+      throw UnsupportedError('Cannot convert "$value" into a bool.');
+  }
 }

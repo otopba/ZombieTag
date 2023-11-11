@@ -87,8 +87,14 @@ class _MyHomePageState extends State<HomePage> with TGPageStateMixin {
     );
   }
 
-  void _onNewGamePressed() {
+  Future<void> _onNewGamePressed() async {
     Log.d(_tag, '_onNewGamePressed');
+
+    final permissionResult = await _cubit.requestPermissions();
+    Log.d(_tag, '_onNewGamePressed: permissionResult = $permissionResult');
+
+    if (!permissionResult) return;
+    if (!mounted) return;
 
     const BeforeGameRoute().push(context);
   }

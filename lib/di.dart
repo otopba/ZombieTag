@@ -8,6 +8,7 @@ import 'package:taggame/services/analytics/composite_analytics_service.dart';
 import 'package:taggame/services/current_player_service.dart';
 import 'package:taggame/services/localization_service.dart';
 import 'package:taggame/services/navigator/router_service.dart';
+import 'package:taggame/services/permissions_service.dart';
 import 'package:taggame/services/route_observer_service.dart';
 
 final di = GetIt.instance;
@@ -48,6 +49,8 @@ Future<void> setupDi() async {
   );
 
   di.registerSingleton<GameRepository>(GameRepository());
+
+  di.registerSingleton<PermissionsService>(PermissionsService());
 
   return di.allReady();
 }
