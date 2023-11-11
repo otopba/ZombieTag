@@ -67,7 +67,7 @@ class CurrentPlayerService {
     player = Player(
       (b) => b
         ..id = id
-        ..uuid = const Uuid().v1()
+        ..uuid = const Uuid().v4()
         ..name = PersistentNames.fromText(id)
         ..rank = 'Newbie'
         ..createdAt = DateTime.now().toUtc(),
