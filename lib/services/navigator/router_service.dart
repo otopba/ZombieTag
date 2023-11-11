@@ -11,6 +11,7 @@ import 'package:taggame/pages/game_lobby/game_lobby_page.dart';
 import 'package:taggame/pages/home/home_page.dart';
 import 'package:taggame/pages/join_game/join_game_page.dart';
 import 'package:taggame/pages/new_game/new_game_page.dart';
+import 'package:taggame/pages/result/result_page.dart';
 import 'package:taggame/pages/roster/roster_page.dart';
 import 'package:taggame/pages/run/run_page.dart';
 import 'package:taggame/pages/zombie_seleted/zombie_seleted_page.dart';
@@ -153,5 +154,21 @@ class GameRoute extends GoRouteData {
     final game = deserialize<Game>(jsonDecode(serializedGame))!;
 
     return GamePage(game: game);
+  }
+}
+
+@TypedGoRoute<ResultRoute>(path: '/result')
+class ResultRoute extends GoRouteData {
+  const ResultRoute({
+    required this.serializedGame,
+  });
+
+  final String serializedGame;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    final game = deserialize<Game>(jsonDecode(serializedGame))!;
+
+    return ResultPage(game: game);
   }
 }

@@ -45,5 +45,16 @@
     }
   },
   "catchThemAll": "Catch them all!",
-  "anotherZombie": "Another person has become a zombie"
+  "anotherZombie": "Another person has become a zombie",
+  "zombieWins": "Zombie wins",
+  "humansWins": "Humans wins",
+  "gameResult": "Game results",
+  "stepsTotal": "Steps: {value}",
+  "@stepsTotal": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  }
 }

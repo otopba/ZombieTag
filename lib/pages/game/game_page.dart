@@ -1,12 +1,18 @@
+import 'dart:convert';
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:taggame/kit/text/wd_text_style.dart';
+import 'package:taggame/kit/tg_colors.dart';
 import 'package:taggame/models/game.dart';
+import 'package:taggame/models/game_status.dart';
+import 'package:taggame/models/serializers.dart';
 import 'package:taggame/pages/game/game_page_cubit.dart';
 import 'package:taggame/pages/game/game_page_cubit_state.dart';
+import 'package:taggame/services/navigator/router_service.dart';
 import 'package:taggame/tg_page_mixin.dart';
 import 'package:taggame/widgets/player_avatar.dart';
 
@@ -48,11 +54,20 @@ class _MyHomePageState extends State<GamePage> with TGPageStateMixin {
     GamePageCubitState previous,
     GamePageCubitState current,
   ) {
-    return previous.newZombie != current.newZombie && current.newZombie != null;
+    return (previous.newZombie != current.newZombie &&
+            current.newZombie != null) ||
+        (previous.game.status != current.game.status &&
+            current.game.status == GameStatus.finished);
   }
 
   void _listener(BuildContext context, GamePageCubitState state) {
     final newZombie = state.newZombie;
+
+    if (state.game.status == GameStatus.finished) {
+      ResultRoute(serializedGame: jsonEncode(serialize(_state.game)))
+          .push(context);
+      return;
+    }
 
     if (newZombie == null) return;
 
@@ -124,6 +139,12 @@ class _MyHomePageState extends State<GamePage> with TGPageStateMixin {
                         : colors.primaryTextColor,
                   ),
                   textAlign: TextAlign.center,
+                ),
+                Text(
+                  _state.count.toString(),
+                  style: TGTextStyle.instance.gigant.copyWith(
+                    color: TGColors.redColor,
+                  ),
                 ),
               ],
             ),

@@ -89,4 +89,10 @@ class GameRepository {
       'zombies': [zombieId],
     });
   }
+
+  Future<void> finish(String gameId) {
+    return FirebaseFirestore.instance.doc('games/$gameId').update({
+      'status': 'finished',
+    });
+  }
 }

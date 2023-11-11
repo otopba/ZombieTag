@@ -11,7 +11,7 @@ import 'package:taggame/services/current_player_service.dart';
 const _tag = 'run_page_cubit';
 
 class RunPageCubit extends Cubit<RunPageCubitState> {
-  static const _totalCount = 10;
+  static const _totalCount = 5;
 
   RunPageCubit({
     required Game game,
