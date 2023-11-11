@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:taggame/kit/text/wd_text_style.dart';
+import 'package:taggame/kit/text/tg_text_style.dart';
 import 'package:taggame/log.dart';
 import 'package:taggame/tg_page_mixin.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:taggame/kit/text/wd_text_style.dart';
+import 'package:taggame/kit/text/tg_text_style.dart';
 import 'package:taggame/log.dart';
 import 'package:taggame/models/game.dart';
 import 'package:taggame/pages/join_game/join_game_page_cubit.dart';

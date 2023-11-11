@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:taggame/di.dart';
-import 'package:taggame/kit/text/wd_text_style.dart';
+import 'package:taggame/kit/text/tg_text_style.dart';
 import 'package:taggame/models/player.dart';
 import 'package:taggame/services/current_player_service.dart';
 import 'package:taggame/tg_page_mixin.dart';

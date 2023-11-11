@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:taggame/kit/text/wd_text_style.dart';
+import 'package:taggame/kit/text/tg_text_style.dart';
 
 class TGTextStyleAndroid implements TGTextStyle {
   @override

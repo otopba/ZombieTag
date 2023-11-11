@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:taggame/kit/text/wd_text_style_android.dart';
-import 'package:taggame/kit/text/wd_text_style_ios.dart';
+import 'package:taggame/kit/text/tg_text_style_android.dart';
+import 'package:taggame/kit/text/tg_text_style_ios.dart';
 
 abstract class TGTextStyle {
   static TGTextStyle instance = defaultTargetPlatform == TargetPlatform.iOS ||

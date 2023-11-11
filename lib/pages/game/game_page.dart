@@ -5,7 +5,7 @@ import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:taggame/kit/text/wd_text_style.dart';
+import 'package:taggame/kit/text/tg_text_style.dart';
 import 'package:taggame/kit/tg_colors.dart';
 import 'package:taggame/models/game.dart';
 import 'package:taggame/models/game_status.dart';
