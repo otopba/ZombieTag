@@ -11,8 +11,10 @@ class MainActivity : FlutterActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channel)
-            .setMethodCallHandler { call: MethodCall, result: MethodChannel.Result ->
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            channel
+        ).setMethodCallHandler { call: MethodCall, result: MethodChannel.Result ->
                 if (call.method == "getNativeData") {
                     val nativeData = "Native Data from Android"
                     result.success(nativeData)
@@ -20,5 +22,22 @@ class MainActivity : FlutterActivity() {
                     result.notImplemented()
                 }
             }
+
+
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channel).apply {
+            invokeMethod("callDartMethod", null, object : MethodChannel.Result {
+                override fun success(result: Any?) {
+                    println("success: $result")
+                }
+
+                override fun error(errorCode: String, errorMessage: String?, errorDetails: Any?) {
+                    println("error: errorCode = ${errorCode}, errorMessage = ${errorMessage}, errorDetails = $errorDetails")
+                }
+
+                override fun notImplemented() {
+                    println("notImplemented")
+                }
+            })
+        }
     }
 }
