@@ -32,5 +32,18 @@
   "itIsYour": "It's your",
   "itIsYou": "It's you",
   "ready": "Ready",
-  "wait": "Wait"
+  "wait": "Wait",
+  "youAreZombie": "You are zombie",
+  "youAreHuman": "You are human",
+  "runAway": "Run away if you can...",
+  "humansLeft": "Humans left: {value}",
+  "@humansLeft": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "catchThemAll": "Catch them all!",
+  "anotherZombie": "Another person has become a zombie"
 }

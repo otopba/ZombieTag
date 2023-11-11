@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:taggame/models/game.dart';
 import 'package:taggame/models/serializers.dart';
 import 'package:taggame/pages/before_game/before_game_page.dart';
+import 'package:taggame/pages/game/game_page.dart';
 import 'package:taggame/pages/game_lobby/game_lobby_page.dart';
 import 'package:taggame/pages/home/home_page.dart';
 import 'package:taggame/pages/join_game/join_game_page.dart';
@@ -137,4 +138,20 @@ class GameLobbyRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       GameLobbyPage(gameId: gameId);
+}
+
+@TypedGoRoute<GameRoute>(path: '/game')
+class GameRoute extends GoRouteData {
+  const GameRoute({
+    required this.serializedGame,
+  });
+
+  final String serializedGame;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    final game = deserialize<Game>(jsonDecode(serializedGame))!;
+
+    return GamePage(game: game);
+  }
 }

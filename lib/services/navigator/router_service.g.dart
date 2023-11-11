@@ -15,6 +15,7 @@ List<RouteBase> get $appRoutes => [
       $zombieSelectedRoute,
       $runRoute,
       $gameLobbyRoute,
+      $gameRoute,
     ];
 
 RouteBase get $homeRoute => GoRouteData.$route(
@@ -202,6 +203,33 @@ extension $GameLobbyRouteExtension on GameLobbyRoute {
         '/gameLobby',
         queryParams: {
           'game-id': gameId,
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $gameRoute => GoRouteData.$route(
+      path: '/game',
+      factory: $GameRouteExtension._fromState,
+    );
+
+extension $GameRouteExtension on GameRoute {
+  static GameRoute _fromState(GoRouterState state) => GameRoute(
+        serializedGame: state.uri.queryParameters['serialized-game']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/game',
+        queryParams: {
+          'serialized-game': serializedGame,
         },
       );
 

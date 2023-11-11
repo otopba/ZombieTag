@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,8 +7,10 @@ import 'package:taggame/gen/assets.gen.dart';
 import 'package:taggame/kit/text/wd_text_style.dart';
 import 'package:taggame/kit/tg_colors.dart';
 import 'package:taggame/models/game.dart';
+import 'package:taggame/models/serializers.dart';
 import 'package:taggame/pages/run/run_page_cubit.dart';
 import 'package:taggame/pages/run/run_page_cubit_state.dart';
+import 'package:taggame/services/navigator/router_service.dart';
 import 'package:taggame/tg_page_mixin.dart';
 
 const _tag = 'run_page';
@@ -35,10 +39,25 @@ class _MyHomePageState extends State<RunPage> with TGPageStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RunPageCubit, RunPageCubitState>(
+    return BlocConsumer<RunPageCubit, RunPageCubitState>(
       bloc: _cubit,
       builder: _builder,
+      listenWhen: _listenWhen,
+      listener: _listener,
     );
+  }
+
+  bool _listenWhen(
+    RunPageCubitState previous,
+    RunPageCubitState current,
+  ) {
+    return previous.finish != current.finish;
+  }
+
+  void _listener(BuildContext context, RunPageCubitState state) {
+    if (!state.finish) return;
+
+    GameRoute(serializedGame: jsonEncode(serialize(state.game))).push(context);
   }
 
   Widget _builder(
