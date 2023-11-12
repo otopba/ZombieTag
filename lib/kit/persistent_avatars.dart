@@ -15,6 +15,14 @@ class PersistentAvatars {
     Assets.avatars.avatar9,
     Assets.avatars.avatar10,
     Assets.avatars.avatar11,
+    Assets.avatars.avatar12,
+    Assets.avatars.avatar13,
+    Assets.avatars.avatar14,
+    Assets.avatars.avatar15,
+    Assets.avatars.avatar16,
+    Assets.avatars.avatar17,
+    Assets.avatars.avatar18,
+    Assets.avatars.avatar20,
   ];
 
   static AssetGenImage fromText(String text) {

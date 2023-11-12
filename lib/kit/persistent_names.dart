@@ -12,6 +12,16 @@ class PersistentNames {
     'Ethan',
     'Mason',
     'Lucas',
+    'Charlotte',
+    'Amelia',
+    'Harper',
+    'Evelyn',
+    'Abigail',
+    'James',
+    'Benjamin',
+    'William',
+    'Oliver',
+    'Henry',
   ];
 
   static String fromText(String text) {

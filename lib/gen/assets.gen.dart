@@ -25,9 +25,45 @@ class $AssetsAvatarsGen {
   AssetGenImage get avatar11 =>
       const AssetGenImage('assets/avatars/avatar_11.jpg');
 
+  /// File path: assets/avatars/avatar_12.jpg
+  AssetGenImage get avatar12 =>
+      const AssetGenImage('assets/avatars/avatar_12.jpg');
+
+  /// File path: assets/avatars/avatar_13.jpg
+  AssetGenImage get avatar13 =>
+      const AssetGenImage('assets/avatars/avatar_13.jpg');
+
+  /// File path: assets/avatars/avatar_14.jpg
+  AssetGenImage get avatar14 =>
+      const AssetGenImage('assets/avatars/avatar_14.jpg');
+
+  /// File path: assets/avatars/avatar_15.jpg
+  AssetGenImage get avatar15 =>
+      const AssetGenImage('assets/avatars/avatar_15.jpg');
+
+  /// File path: assets/avatars/avatar_16.jpg
+  AssetGenImage get avatar16 =>
+      const AssetGenImage('assets/avatars/avatar_16.jpg');
+
+  /// File path: assets/avatars/avatar_17.jpg
+  AssetGenImage get avatar17 =>
+      const AssetGenImage('assets/avatars/avatar_17.jpg');
+
+  /// File path: assets/avatars/avatar_18.jpg
+  AssetGenImage get avatar18 =>
+      const AssetGenImage('assets/avatars/avatar_18.jpg');
+
+  /// File path: assets/avatars/avatar_19.jpg
+  AssetGenImage get avatar19 =>
+      const AssetGenImage('assets/avatars/avatar_19.jpg');
+
   /// File path: assets/avatars/avatar_2.jpg
   AssetGenImage get avatar2 =>
       const AssetGenImage('assets/avatars/avatar_2.jpg');
+
+  /// File path: assets/avatars/avatar_20.jpg
+  AssetGenImage get avatar20 =>
+      const AssetGenImage('assets/avatars/avatar_20.jpg');
 
   /// File path: assets/avatars/avatar_3.jpg
   AssetGenImage get avatar3 =>
@@ -62,7 +98,16 @@ class $AssetsAvatarsGen {
         avatar1,
         avatar10,
         avatar11,
+        avatar12,
+        avatar13,
+        avatar14,
+        avatar15,
+        avatar16,
+        avatar17,
+        avatar18,
+        avatar19,
         avatar2,
+        avatar20,
         avatar3,
         avatar4,
         avatar5,
