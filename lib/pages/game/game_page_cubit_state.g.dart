@@ -15,6 +15,8 @@ class _$GamePageCubitState extends GamePageCubitState {
   final Player? newZombie;
   @override
   final int count;
+  @override
+  final Player? currentPlayer;
 
   factory _$GamePageCubitState(
           [void Function(GamePageCubitStateBuilder)? updates]) =>
@@ -24,7 +26,8 @@ class _$GamePageCubitState extends GamePageCubitState {
       {required this.game,
       required this.currentPlayerZombie,
       this.newZombie,
-      required this.count})
+      required this.count,
+      this.currentPlayer})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(game, r'GamePageCubitState', 'game');
     BuiltValueNullFieldError.checkNotNull(
@@ -49,7 +52,8 @@ class _$GamePageCubitState extends GamePageCubitState {
         game == other.game &&
         currentPlayerZombie == other.currentPlayerZombie &&
         newZombie == other.newZombie &&
-        count == other.count;
+        count == other.count &&
+        currentPlayer == other.currentPlayer;
   }
 
   @override
@@ -59,6 +63,7 @@ class _$GamePageCubitState extends GamePageCubitState {
     _$hash = $jc(_$hash, currentPlayerZombie.hashCode);
     _$hash = $jc(_$hash, newZombie.hashCode);
     _$hash = $jc(_$hash, count.hashCode);
+    _$hash = $jc(_$hash, currentPlayer.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -69,7 +74,8 @@ class _$GamePageCubitState extends GamePageCubitState {
           ..add('game', game)
           ..add('currentPlayerZombie', currentPlayerZombie)
           ..add('newZombie', newZombie)
-          ..add('count', count))
+          ..add('count', count)
+          ..add('currentPlayer', currentPlayer))
         .toString();
   }
 }
@@ -95,6 +101,12 @@ class GamePageCubitStateBuilder
   int? get count => _$this._count;
   set count(int? count) => _$this._count = count;
 
+  PlayerBuilder? _currentPlayer;
+  PlayerBuilder get currentPlayer =>
+      _$this._currentPlayer ??= new PlayerBuilder();
+  set currentPlayer(PlayerBuilder? currentPlayer) =>
+      _$this._currentPlayer = currentPlayer;
+
   GamePageCubitStateBuilder();
 
   GamePageCubitStateBuilder get _$this {
@@ -104,6 +116,7 @@ class GamePageCubitStateBuilder
       _currentPlayerZombie = $v.currentPlayerZombie;
       _newZombie = $v.newZombie?.toBuilder();
       _count = $v.count;
+      _currentPlayer = $v.currentPlayer?.toBuilder();
       _$v = null;
     }
     return this;
@@ -135,7 +148,8 @@ class GamePageCubitStateBuilder
                   'currentPlayerZombie'),
               newZombie: _newZombie?.build(),
               count: BuiltValueNullFieldError.checkNotNull(
-                  count, r'GamePageCubitState', 'count'));
+                  count, r'GamePageCubitState', 'count'),
+              currentPlayer: _currentPlayer?.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -144,6 +158,9 @@ class GamePageCubitStateBuilder
 
         _$failedField = 'newZombie';
         _newZombie?.build();
+
+        _$failedField = 'currentPlayer';
+        _currentPlayer?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'GamePageCubitState', _$failedField, e.toString());

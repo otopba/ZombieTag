@@ -61,5 +61,6 @@
   "ok": "Ok",
   "cancel": "Cancel",
   "permissionTitle": "Please allow this permission",
-  "permissionSubtitle": "Zombie whats it"
+  "permissionSubtitle": "Zombie whats it",
+  "you": "You"
 }

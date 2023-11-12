@@ -38,6 +38,8 @@ class GamePageCubit extends Cubit<GamePageCubitState> {
   final NearbyPlayersService _nearbyPlayersService;
 
   late final StreamSubscription _gameSubscription;
+  late final StreamSubscription _playerSubscription;
+
   late final Timer _timer;
 
   Future<void> _init() async {
@@ -45,6 +47,9 @@ class GamePageCubit extends Cubit<GamePageCubitState> {
 
     _gameSubscription =
         _gameRepository.gameStream(state.game.id).listen(_onGameUpdate);
+
+    _playerSubscription =
+        _currentPlayerService.currentPlayerStream.listen(_onPlayerUpdate);
 
     final currentPlayer = await _currentPlayerService.currentPlayerStream.first;
 
@@ -64,6 +69,7 @@ class GamePageCubit extends Cubit<GamePageCubitState> {
     await super.close();
     _timer.cancel();
     await _gameSubscription.cancel();
+    await _playerSubscription.cancel();
     await _nearbyPlayersService.endGame();
   }
 
@@ -130,5 +136,13 @@ class GamePageCubit extends Cubit<GamePageCubitState> {
         await _gameRepository.finish(state.game.id);
       }
     }
+  }
+
+  void _onPlayerUpdate(Player player) {
+    Log.d(_tag, '_onPlayerUpdate: player = $player');
+
+    if (isClosed) return;
+
+    emit(state.rebuild((b) => b..currentPlayer = player.toBuilder()));
   }
 }

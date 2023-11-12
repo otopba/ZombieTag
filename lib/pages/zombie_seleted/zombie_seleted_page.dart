@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:taggame/kit/text/tg_text_style.dart';
+import 'package:taggame/kit/tg_animations.dart';
 import 'package:taggame/models/game.dart';
 import 'package:taggame/models/serializers.dart';
 import 'package:taggame/pages/zombie_seleted/zombie_seleted_page_cubit.dart';
@@ -102,12 +103,21 @@ class _MyHomePageState extends State<ZombieSelectedPage>
                   ),
                   textAlign: TextAlign.center,
                 ),
-                Text(
-                  _cubit.getZombiePlayer().name.toUpperCase(),
-                  style: TGTextStyle.instance.styleH1.copyWith(
-                    color: colors.accentColor,
+                AnimatedOpacity(
+                  opacity: _state.currentPlayer == null ? 0 : 1,
+                  duration: TGAnimations.duration,
+                  curve: _state.currentPlayer == null
+                      ? TGAnimations.disappearCurve
+                      : TGAnimations.appearCurve,
+                  child: Text(
+                    (_state.currentPlayer?.id == _cubit.getZombiePlayer().id)
+                        ? localizations.you
+                        : _cubit.getZombiePlayer().name.toUpperCase(),
+                    style: TGTextStyle.instance.styleH1.copyWith(
+                      color: colors.accentColor,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 100.h),
                 Hero(

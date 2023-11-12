@@ -72,7 +72,9 @@ class _MyHomePageState extends State<GamePage> with TGPageStateMixin {
     if (newZombie == null) return;
 
     Flushbar(
-      title: newZombie.name,
+      title: _state.currentPlayer?.id == newZombie.id
+          ? localizations.you
+          : newZombie.name,
       message: localizations.anotherZombie,
       duration: const Duration(seconds: 10),
       icon: PlayerAvatar(player: newZombie),

@@ -19,4 +19,6 @@ abstract class GamePageCubitState
   Player? get newZombie;
 
   int get count;
+
+  Player? get currentPlayer;
 }

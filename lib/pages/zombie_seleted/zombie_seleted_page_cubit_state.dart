@@ -17,4 +17,6 @@ abstract class ZombieSelectedPageCubitState
   Game get game;
 
   bool get ready;
+
+  Player? get currentPlayer;
 }
