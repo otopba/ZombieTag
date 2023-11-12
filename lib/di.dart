@@ -12,6 +12,7 @@ import 'package:taggame/services/nearby_players_service.dart';
 import 'package:taggame/services/permissions_service.dart';
 import 'package:taggame/services/route_observer_service.dart';
 import 'package:taggame/services/step_count_service.dart';
+import 'package:taggame/services/wakelock_service.dart';
 
 final di = GetIt.instance;
 
@@ -66,6 +67,8 @@ Future<void> setupDi() async {
     StepCountService(),
     dispose: (it) => it.dispose(),
   );
+
+  di.registerSingleton<WakelockService>(WakelockService());
 
   return di.allReady();
 }

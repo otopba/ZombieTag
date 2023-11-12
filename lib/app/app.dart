@@ -119,6 +119,7 @@ class AppState extends State<App> {
         locale: _state.overridedLocale,
         theme: theme,
         darkTheme: dartTheme,
+        themeMode: ThemeMode.dark,
       ),
     );
   }

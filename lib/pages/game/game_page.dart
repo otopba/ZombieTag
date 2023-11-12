@@ -14,6 +14,7 @@ import 'package:taggame/pages/game/game_page_cubit.dart';
 import 'package:taggame/pages/game/game_page_cubit_state.dart';
 import 'package:taggame/services/navigator/router_service.dart';
 import 'package:taggame/tg_page_mixin.dart';
+import 'package:taggame/utils/vibrates.dart';
 import 'package:taggame/widgets/player_avatar.dart';
 
 const _tag = 'game_page';
@@ -70,6 +71,8 @@ class _MyHomePageState extends State<GamePage> with TGPageStateMixin {
     }
 
     if (newZombie == null) return;
+
+    vibrateHeavy();
 
     Flushbar(
       title: _state.currentPlayer?.id == newZombie.id
