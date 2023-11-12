@@ -65,7 +65,7 @@ class Scanner(
                 }
                 return DetectedPlayer(
                     id = id,
-                    isZombie = isZombie1,
+                    isZombie = isZombie,
                     signalPower = result.rssi
                 )
             }

@@ -91,8 +91,8 @@ class Advertiser(
     }
 
     companion object {
-        private const val TAG : String = "Advertiser"
+        private const val TAG: String = "Advertiser"
 
-        val SERVICE_UUID: UUID =  UUID.fromString("0000b81d-0000-1000-8000-00805f9b34fb")
+        val SERVICE_UUID: UUID = UUID.fromString("0000b81d-0000-1000-8000-00805f9b34fb")
     }
 }
