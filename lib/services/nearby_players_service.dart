@@ -37,7 +37,9 @@ class NearbyPlayersService {
           case 'onPlayersDetected':
             Log.d(_tag, 'onPlayersDetected: ${call.arguments}');
 
-            final arguments = call.arguments as List<String>;
+            final arguments = (call.arguments as List<Object?>)
+                .map((it) => it as String)
+                .toList();
 
             _onPlayersDetected(arguments);
 

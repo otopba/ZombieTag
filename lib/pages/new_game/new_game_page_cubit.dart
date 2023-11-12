@@ -80,7 +80,8 @@ class NewGamePageCubit extends Cubit<NewGamePageCubitState> {
           )
           ..status = GameStatus.stop
           ..createdAt = DateTime.now().toUtc()
-          ..uuid = const Uuid().v1(),
+          // ..uuid = const Uuid().v1(),
+          ..uuid = '0000b81d-0000-1000-8000-00805f9b34fb',
       ),
     );
 
