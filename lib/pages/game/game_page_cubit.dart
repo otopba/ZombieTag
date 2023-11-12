@@ -79,6 +79,10 @@ class GamePageCubit extends Cubit<GamePageCubitState> {
     if (game == null) return;
     if (isClosed) return;
 
+    if (game.status == GameStatus.finished) {
+      await _nearbyPlayersService.endGame();
+    }
+
     Player? newZombie;
     if (game.zombies.length > state.game.zombies.length) {
       final newZombieId = game.zombies.last;
