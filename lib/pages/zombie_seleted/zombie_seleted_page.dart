@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:taggame/kit/text/tg_text_style.dart';
 import 'package:taggame/kit/tg_animations.dart';
+import 'package:taggame/kit/tg_colors.dart';
 import 'package:taggame/models/game.dart';
 import 'package:taggame/models/serializers.dart';
 import 'package:taggame/pages/zombie_seleted/zombie_seleted_page_cubit.dart';
@@ -114,7 +115,10 @@ class _MyHomePageState extends State<ZombieSelectedPage>
                         ? localizations.you
                         : _cubit.getZombiePlayer().name.toUpperCase(),
                     style: TGTextStyle.instance.styleH1.copyWith(
-                      color: colors.accentColor,
+                      color: (_state.currentPlayer?.id ==
+                              _cubit.getZombiePlayer().id)
+                          ? TGColors.redColor
+                          : colors.accentColor,
                     ),
                     textAlign: TextAlign.center,
                   ),

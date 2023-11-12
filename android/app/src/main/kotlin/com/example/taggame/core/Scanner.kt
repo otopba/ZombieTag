@@ -63,6 +63,10 @@ class Scanner(
                     Log.d(TAG, "skip another game message with shortGameUUID=$shortGameUUID")
                     return null
                 }
+                if (result.rssi < -70) {
+                    Log.d(TAG, "skip weak signal")
+                    return null
+                }
                 return DetectedPlayer(
                     id = id,
                     isZombie = isZombie,
