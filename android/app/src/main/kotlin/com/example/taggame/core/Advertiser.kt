@@ -51,11 +51,12 @@ class Advertiser(
             .setTimeout(0)
             .build()
 
+        val bytes = byteArrayOf((if (zombie) 1 else 0)) + gameUUID.toString().takeLast(4).toByteArray()
         val data = AdvertiseData.Builder()
             .setIncludeDeviceName(false)
             .setIncludeTxPowerLevel(false)
-            .addServiceUuid(ParcelUuid(gameUUID))
-            .addServiceData(ParcelUuid(userUUID), byteArrayOf((if (zombie) 1 else 0)))
+            .addServiceUuid(ParcelUuid(SERVICE_UUID))
+            .addServiceData(ParcelUuid(userUUID), bytes)
             .build()
 
         advertiseCallback = object : AdvertiseCallback() {
@@ -89,7 +90,9 @@ class Advertiser(
         bluetoothLeAdvertiser.stopAdvertising(advertiseCallback)
     }
 
-    private companion object {
-        const val TAG : String = "Advertiser"
+    companion object {
+        private const val TAG : String = "Advertiser"
+
+        val SERVICE_UUID: UUID =  UUID.fromString("0000b81d-0000-1000-8000-00805f9b34fb")
     }
 }

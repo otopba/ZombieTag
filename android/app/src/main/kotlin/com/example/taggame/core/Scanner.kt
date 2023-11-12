@@ -44,7 +44,7 @@ class Scanner(
             .build()
 
         val scanFilter = ScanFilter.Builder()
-            .setServiceUuid(ParcelUuid(gameUUID))
+            .setServiceUuid(ParcelUuid(Advertiser.SERVICE_UUID))
             .build()
 
         scanCallback = object : ScanCallback() {
@@ -56,9 +56,16 @@ class Scanner(
 
                 val (parcelUuid, data) = serviceData.entries.first()
                 val id = parcelUuid.toString()
+                val isZombie = data[0].toInt() == 1
+                val shortGameUUID = String(data.drop(1).toByteArray())
+
+                if (gameUUID.toString().takeLast(4) != shortGameUUID) {
+                    Log.d(TAG, "skip another game message with shortGameUUID=$shortGameUUID")
+                    return null
+                }
                 return DetectedPlayer(
                     id = id,
-                    isZombie = data[0].toInt() == 1,
+                    isZombie = isZombie1,
                     signalPower = result.rssi
                 )
             }
