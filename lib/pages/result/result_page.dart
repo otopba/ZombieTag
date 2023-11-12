@@ -110,6 +110,7 @@ class _MyHomePageState extends State<ResultPage> with TGPageStateMixin {
     return PlayerResultCard(
       player: player,
       you: _state.currentPlayer?.id == player.id,
+      steps: _state.game.steps[player.id],
     );
   }
 

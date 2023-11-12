@@ -11,6 +11,7 @@ import 'package:taggame/pages/game/game_page_cubit_state.dart';
 import 'package:taggame/repos/game_repository.dart';
 import 'package:taggame/services/current_player_service.dart';
 import 'package:taggame/services/nearby_players_service.dart';
+import 'package:taggame/services/step_count_service.dart';
 
 const _tag = 'game_page_cubit';
 
@@ -22,6 +23,7 @@ class GamePageCubit extends Cubit<GamePageCubitState> {
   })  : _currentPlayerService = di.get(),
         _gameRepository = di.get(),
         _nearbyPlayersService = di.get(),
+        _stepCountService = di.get(),
         super(
           GamePageCubitState(
             (b) => b
@@ -36,6 +38,7 @@ class GamePageCubit extends Cubit<GamePageCubitState> {
   final CurrentPlayerService _currentPlayerService;
   final GameRepository _gameRepository;
   final NearbyPlayersService _nearbyPlayersService;
+  final StepCountService _stepCountService;
 
   late final StreamSubscription _gameSubscription;
   late final StreamSubscription _playerSubscription;
@@ -44,6 +47,8 @@ class GamePageCubit extends Cubit<GamePageCubitState> {
 
   Future<void> _init() async {
     Log.d(_tag, '_init');
+
+    _stepCountService.start();
 
     _gameSubscription =
         _gameRepository.gameStream(state.game.id).listen(_onGameUpdate);
@@ -71,6 +76,7 @@ class GamePageCubit extends Cubit<GamePageCubitState> {
     await _gameSubscription.cancel();
     await _playerSubscription.cancel();
     await _nearbyPlayersService.endGame();
+    await _stepCountService.stop();
   }
 
   Future<void> _onGameUpdate(Game? game) async {
@@ -81,6 +87,13 @@ class GamePageCubit extends Cubit<GamePageCubitState> {
 
     if (game.status == GameStatus.finished) {
       await _nearbyPlayersService.endGame();
+
+      final count = await _stepCountService.stop();
+      await _gameRepository.addSteps(
+        gameId: game.id,
+        playerId: state.currentPlayer?.id ?? '', //fixme
+        count: count,
+      );
     }
 
     Player? newZombie;

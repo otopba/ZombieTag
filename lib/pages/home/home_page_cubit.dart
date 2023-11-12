@@ -85,6 +85,19 @@ class HomePageCubit extends Cubit<HomePageCubitState> {
     Log.d(_tag, 'requestPermissions: locationWhenInUse = $locationWhenInUse');
     if (!locationWhenInUse) return false;
 
+    final activityRecognition = await _permissionsService.hardRequestPermission(
+      title: localization.permissionTitle,
+      permissionRationale: localization.permissionSubtitle,
+      permission: Permission.activityRecognition,
+    );
+
+    Log.d(
+      _tag,
+      'requestPermissions: activityRecognition = $activityRecognition',
+    );
+
+    if (!activityRecognition) return false;
+
     return true;
   }
 }

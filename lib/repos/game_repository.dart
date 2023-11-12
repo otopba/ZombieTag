@@ -106,4 +106,19 @@ class GameRepository {
       'zombies': FieldValue.arrayUnion([playerId])
     });
   }
+
+  Future<void> addSteps({
+    required String gameId,
+    required String playerId,
+    required int count,
+  }) {
+    Log.d(
+      _tag,
+      'addSteps: gameId = $gameId, player = $playerId, count = $count',
+    );
+
+    return FirebaseFirestore.instance
+        .doc('games/$gameId')
+        .update({'steps.$playerId': count});
+  }
 }

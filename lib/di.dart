@@ -11,6 +11,7 @@ import 'package:taggame/services/navigator/router_service.dart';
 import 'package:taggame/services/nearby_players_service.dart';
 import 'package:taggame/services/permissions_service.dart';
 import 'package:taggame/services/route_observer_service.dart';
+import 'package:taggame/services/step_count_service.dart';
 
 final di = GetIt.instance;
 
@@ -58,6 +59,11 @@ Future<void> setupDi() async {
       gameRepository: di.get(),
       currentPlayerService: di.get(),
     ),
+    dispose: (it) => it.dispose(),
+  );
+
+  di.registerSingleton<StepCountService>(
+    StepCountService(),
     dispose: (it) => it.dispose(),
   );
 

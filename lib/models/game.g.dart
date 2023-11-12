@@ -37,6 +37,10 @@ class _$GameSerializer implements StructuredSerializer<Game> {
       serializers.serialize(object.zombies,
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
+      'steps',
+      serializers.serialize(object.steps,
+          specifiedType: const FullType(
+              BuiltMap, const [const FullType(String), const FullType(int)])),
     ];
     Object? value;
     value = object.createdAt;
@@ -94,6 +98,11 @@ class _$GameSerializer implements StructuredSerializer<Game> {
                       BuiltList, const [const FullType(String)]))!
               as BuiltList<Object?>);
           break;
+        case 'steps':
+          result.steps.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(int)]))!);
+          break;
       }
     }
 
@@ -116,6 +125,8 @@ class _$Game extends Game {
   final BuiltList<String> readyPlayers;
   @override
   final BuiltList<String> zombies;
+  @override
+  final BuiltMap<String, int> steps;
 
   factory _$Game([void Function(GameBuilder)? updates]) =>
       (new GameBuilder()..update(updates))._build();
@@ -127,7 +138,8 @@ class _$Game extends Game {
       required this.status,
       this.createdAt,
       required this.readyPlayers,
-      required this.zombies})
+      required this.zombies,
+      required this.steps})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'Game', 'id');
     BuiltValueNullFieldError.checkNotNull(uuid, r'Game', 'uuid');
@@ -136,6 +148,7 @@ class _$Game extends Game {
     BuiltValueNullFieldError.checkNotNull(
         readyPlayers, r'Game', 'readyPlayers');
     BuiltValueNullFieldError.checkNotNull(zombies, r'Game', 'zombies');
+    BuiltValueNullFieldError.checkNotNull(steps, r'Game', 'steps');
   }
 
   @override
@@ -155,7 +168,8 @@ class _$Game extends Game {
         status == other.status &&
         createdAt == other.createdAt &&
         readyPlayers == other.readyPlayers &&
-        zombies == other.zombies;
+        zombies == other.zombies &&
+        steps == other.steps;
   }
 
   @override
@@ -168,6 +182,7 @@ class _$Game extends Game {
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, readyPlayers.hashCode);
     _$hash = $jc(_$hash, zombies.hashCode);
+    _$hash = $jc(_$hash, steps.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -181,7 +196,8 @@ class _$Game extends Game {
           ..add('status', status)
           ..add('createdAt', createdAt)
           ..add('readyPlayers', readyPlayers)
-          ..add('zombies', zombies))
+          ..add('zombies', zombies)
+          ..add('steps', steps))
         .toString();
   }
 }
@@ -221,6 +237,11 @@ class GameBuilder implements Builder<Game, GameBuilder> {
       _$this._zombies ??= new ListBuilder<String>();
   set zombies(ListBuilder<String>? zombies) => _$this._zombies = zombies;
 
+  MapBuilder<String, int>? _steps;
+  MapBuilder<String, int> get steps =>
+      _$this._steps ??= new MapBuilder<String, int>();
+  set steps(MapBuilder<String, int>? steps) => _$this._steps = steps;
+
   GameBuilder() {
     Game._setDefaults(this);
   }
@@ -235,6 +256,7 @@ class GameBuilder implements Builder<Game, GameBuilder> {
       _createdAt = $v.createdAt;
       _readyPlayers = $v.readyPlayers.toBuilder();
       _zombies = $v.zombies.toBuilder();
+      _steps = $v.steps.toBuilder();
       _$v = null;
     }
     return this;
@@ -267,7 +289,8 @@ class GameBuilder implements Builder<Game, GameBuilder> {
                   status, r'Game', 'status'),
               createdAt: createdAt,
               readyPlayers: readyPlayers.build(),
-              zombies: zombies.build());
+              zombies: zombies.build(),
+              steps: steps.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -278,6 +301,8 @@ class GameBuilder implements Builder<Game, GameBuilder> {
         readyPlayers.build();
         _$failedField = 'zombies';
         zombies.build();
+        _$failedField = 'steps';
+        steps.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'Game', _$failedField, e.toString());

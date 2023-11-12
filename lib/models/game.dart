@@ -16,7 +16,8 @@ abstract class Game implements Built<Game, GameBuilder> {
   @BuiltValueHook(initializeBuilder: true)
   static void _setDefaults(GameBuilder b) => b
     ..readyPlayers = ListBuilder<String>()
-    ..zombies = ListBuilder<String>();
+    ..zombies = ListBuilder<String>()
+    ..steps = MapBuilder<String, int>();
 
   String get id;
 
@@ -31,4 +32,6 @@ abstract class Game implements Built<Game, GameBuilder> {
   BuiltList<String> get readyPlayers;
 
   BuiltList<String> get zombies;
+
+  BuiltMap<String, int> get steps;
 }

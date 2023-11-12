@@ -1,8 +1,8 @@
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:taggame/kit/persistent_steps.dart';
 import 'package:taggame/kit/text/tg_text_style.dart';
+import 'package:taggame/kit/tg_animations.dart';
 import 'package:taggame/models/player.dart';
 import 'package:taggame/tg_page_mixin.dart';
 import 'package:taggame/widgets/player_avatar.dart';
@@ -14,10 +14,12 @@ class PlayerResultCard extends StatefulWidget {
     super.key,
     required this.player,
     required this.you,
+    required this.steps,
   });
 
   final Player player;
   final bool you;
+  final int? steps;
 
   @override
   PlayerResultCardState createState() => PlayerResultCardState();
@@ -94,10 +96,15 @@ class PlayerResultCardState extends State<PlayerResultCard>
                 ),
               ),
               SizedBox(width: 20.w),
+              AnimatedOpacity(
+                opacity: widget.steps == null ? 0 : 1,
+                duration: TGAnimations.duration,
+                curve: widget.steps == null
+                    ? TGAnimations.disappearCurve
+                    : TGAnimations.appearCurve,
+              ),
               Text(
-                localizations.stepsTotal(
-                  PersistentSteps.fromText(widget.player.id),
-                ),
+                localizations.stepsTotal(widget.steps ?? 0),
                 style: TGTextStyle.instance.style17Semibold.copyWith(
                   color: colors.primaryTextColor,
                 ),
